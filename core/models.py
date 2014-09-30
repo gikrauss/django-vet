@@ -7,7 +7,7 @@ class Client(models.Model):
   email = models.EmailField(max_length=200, null=True, blank=True)
 
   def __unicode__(self):
-    return self.name
+    return "%s %s" % [self.firstname, self.lastname]
 
 
 class Specie(models.Model):
