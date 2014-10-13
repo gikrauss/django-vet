@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'core',
     'smart_selects',
+    'localflavor',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -2,7 +2,15 @@
 
 from django.db import models
 from datetime import date
-from smart_selects.db_fields import ChainedForeignKey 
+from smart_selects.db_fields import ChainedForeignKey
+from localflavor.ar import ar_provinces
+
+
+PHONE_TYPE = (
+  ('C', 'Celular'),
+  ('F', 'Fijo'),
+  ('W', 'Trabajo'),
+  )
 
 
 class Client(models.Model):
@@ -15,6 +23,30 @@ class Client(models.Model):
 
   class Meta:
     verbose_name = 'cliente'
+
+
+class Address(models.Model):
+  address = models.CharField(max_length=200, verbose_name='calle y número')
+  city = models.CharField(max_length=200, verbose_name='ciudad')
+  state = models.CharField(max_length=1, choices=ar_provinces.PROVINCE_CHOICES, verbose_name='provincia')
+  client = models.ForeignKey(Client)
+
+  def __unicode__(self):
+    return "%s, %s, %s" % (self.address, self.city, self.state)
+
+  class Meta:
+    verbose_name = 'dirección'
+    verbose_name_plural = 'direcciones'
+
+
+class PhoneNumber(models.Model):
+  number = models.CharField(max_length=200, verbose_name='número')
+  number_type = models.CharField(max_length=1, choices=PHONE_TYPE, verbose_name='tipo')
+  client = models.ForeignKey(Client)
+
+  class Meta:
+    verbose_name = 'número de teléfono'
+    verbose_name_plural = 'números de teléfono'
 
 
 class Specie(models.Model):
