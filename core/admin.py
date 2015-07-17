@@ -1,17 +1,21 @@
 from django.contrib import admin
-from core.models import Client, Patient, MedicalRecord, Breed, Specie, Gender, Address, PhoneNumber
+from core.models import Client, Patient, MedicalRecord, Breed, Specie, Gender, Address, PhoneNumber, Vaccine
 
 
 class MedicalRecordInLine(admin.TabularInline):
   model = MedicalRecord
   extra = 1
 
+class VaccineInLine(admin.TabularInline):
+  model = Vaccine
+  extra = 0
 
 class PatientAdmin(admin.ModelAdmin):
   list_display = ('name', 'owner', 'specie', 'breed')
   list_filter = ('specie', 'breed')
   inlines = [
   	MedicalRecordInLine,
+    VaccineInLine,
   ]
 
 
@@ -26,7 +30,7 @@ class AddressInLine(admin.TabularInline):
 
 
 class ClientAdmin(admin.ModelAdmin):
-  list_display = ('firstname', 'lastname', 'email')
+  list_display = ('lastname', 'firstname', 'email')
   inlines = [
     PhoneNumberInLine,
     AddressInLine,

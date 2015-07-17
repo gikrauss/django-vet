@@ -117,7 +117,7 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
 SUIT_CONFIG = {
     # header
     'ADMIN_NAME': 'Veterinaria Krauss',
-    'HEADER_DATE_FORMAT': 'l, j. F Y',
+    'HEADER_DATE_FORMAT': 'l, j F Y',
     'HEADER_TIME_FORMAT': 'H:i',
 
     # forms
@@ -132,12 +132,15 @@ SUIT_CONFIG = {
     # },
     # 'MENU_OPEN_FIRST_CHILD': True, # Default True
     # 'MENU_EXCLUDE': ('auth.group',),
-    # 'MENU': (
-    #     'sites',
-    #     {'app': 'auth', 'icon':'icon-lock', 'models': ('user', 'group')},
-    #     {'label': 'Settings', 'icon':'icon-cog', 'models': ('auth.user', 'auth.group')},
-    #     {'label': 'Support', 'icon':'icon-question-sign', 'url': '/support/'},
-    # ),
+    'MENU': (
+    #    'sites',
+        {'app': 'core', 'icon': 'icon-plus-sign', 'label': 'Clinica', 'models':('core.client', 'core.patient')},
+        {'label': 'Proveedores', 'icon':'icon-tag', 'url': '/support/'},
+        {'label': 'Productos', 'icon':'icon-barcode', 'url': '/support/'},
+        '-',
+        {'label': 'Configuracion', 'icon':'icon-cog', 'models': ('core.gender', 'core.specie', 'core.breed')},
+
+    ),
 
     # misc
     # 'LIST_PER_PAGE': 15

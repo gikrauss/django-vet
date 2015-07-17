@@ -29,10 +29,11 @@ class Address(models.Model):
   address = models.CharField(max_length=200, verbose_name='calle y número')
   city = models.CharField(max_length=200, verbose_name='ciudad')
   state = models.CharField(max_length=1, choices=ar_provinces.PROVINCE_CHOICES, verbose_name='provincia')
+  postal = models.CharField(max_length=6, null=True, verbose_name='código postal')
   client = models.ForeignKey(Client)
 
   def __unicode__(self):
-    return "%s, %s, %s" % (self.address, self.city, self.state)
+    return "%s, %s, %s, %s" % (self.address, self.city, self.state, self.postal)
 
   class Meta:
     verbose_name = 'dirección'
@@ -87,9 +88,11 @@ class Patient(models.Model):
   breed = ChainedForeignKey(Breed, null=True, chained_field="specie", chained_model_field="specie", 
         show_all=False, auto_choose=True, verbose_name='raza')
   gender = models.ForeignKey(Gender, null=True, verbose_name='sexo')
+  neutered = models.BooleanField(default=False, verbose_name='castrado')
   birthday = models.DateField(null=True, verbose_name='fecha de nacimiento')
+  weight = models.CharField(null=True, blank=True, max_length=10, verbose_name='peso')
   identifier = models.CharField(null=True, blank=True, max_length=200, verbose_name='identificador')
-  initial_anamnesis = models.TextField(null=True, blank=True, verbose_name='anamnesis')
+  initial_anamnesis = models.TextField(null=True, blank=True, verbose_name='anamnesis inicial')
 
   def age(self):
     today = date.today()
@@ -105,10 +108,30 @@ class Patient(models.Model):
 class MedicalRecord(models.Model):
   date = models.DateField(default=date.today, verbose_name='fecha')
   patient = models.ForeignKey(Patient)
+  temp = models.CharField(max_length=5, null=True, blank=True, verbose_name='temp')
   anamnesis = models.TextField(null=True, blank=True, verbose_name='anamnesis')
   exam = models.TextField(null=True, blank=True, verbose_name='examen')
   diagnostic = models.TextField(null=True, blank=True, verbose_name='diagnóstico')
-  ttd = models.TextField(null=True, blank=True, verbose_name='ttd')
+  tto = models.TextField(null=True, blank=True, verbose_name='indicaciones')
 
   class Meta:
     verbose_name = 'historia clínica'
+
+
+VAC_TYPE = (
+  ('Q', 'Quintuple'),
+  ('S', 'Sextuple'),
+  ('R', 'Rabia'),
+  ('T', 'Tos de las perreras'),
+  )
+
+class Vaccine(models.Model):
+  vac_type = models.CharField(max_length=1, choices=VAC_TYPE, verbose_name='tipo')
+  patient = models.ForeignKey(Patient)
+  marca = models.CharField(max_length=10, verbose_name='marca')
+  date = models.DateField(default=date.today, verbose_name='fecha de vacunación')
+  expire_date = models.DateField(verbose_name='fecha de vencimiento')
+  next_vac = models.CharField(null=True, max_length=1, choices=VAC_TYPE, verbose_name='próxima vacuna')
+
+  class Meta:
+    verbose_name='Vacuna'
