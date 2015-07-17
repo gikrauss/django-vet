@@ -1,0 +1,10 @@
+Django==1.7
+argparse==1.2.1
+dj-database-url==0.3.0
+dj-static==0.0.6
+django-localflavor==1.0
+-e git://github.com/digi604/django-smart-selects.git@f5f7b826a543da2e6eeac37729edff9b7b8e8a64#egg=django_smart_selects-master
+django-suit==0.2.13
+static3==0.5.1
+wsgiref==0.1.2
+
