@@ -37,9 +37,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
+    'clinic',
     'smart_selects',
     'localflavor',
+    'finances',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -102,9 +103,13 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
+)
+MEDIA_ROOT = 'mediafiles'
+MEDIA_URL = '/media/'
+MEDIAFILES_DIRS = (
+    os.path.join(BASE_DIR, 'media'),
 )
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
@@ -134,11 +139,12 @@ SUIT_CONFIG = {
     # 'MENU_EXCLUDE': ('auth.group',),
     'MENU': (
     #    'sites',
-        {'app': 'core', 'icon': 'icon-plus-sign', 'label': 'Clinica', 'models':('core.client', 'core.patient')},
-        {'label': 'Proveedores', 'icon':'icon-tag', 'url': '/support/'},
-        {'label': 'Productos', 'icon':'icon-barcode', 'url': '/support/'},
+        {'app': 'clinic', 'icon': 'icon-plus-sign', 'label': 'Clinica', 'models':('clinic.client', 'clinic.patient')},
+        {'app': 'finances', 'icon': 'icon-home', 'label': 'Finanzas', 'models':('finances.item')},
+    #    {'label': 'Proveedores', 'icon':'icon-tag', 'url': '/support/'},
+    #    {'label': 'Productos', 'icon':'icon-barcode', 'url': '/support/'},
         '-',
-        {'label': 'Configuracion', 'icon':'icon-cog', 'models': ('core.gender', 'core.specie', 'core.breed')},
+        {'label': 'Configuracion', 'icon':'icon-cog', 'models': ('clinic.gender', 'clinic.specie', 'clinic.breed')},
 
     ),
 
