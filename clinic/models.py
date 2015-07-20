@@ -92,6 +92,7 @@ class Patient(models.Model):
   birthday = models.DateField(null=True, verbose_name='fecha de nacimiento')
   weight = models.CharField(null=True, blank=True, max_length=10, verbose_name='peso')
   identifier = models.CharField(null=True, blank=True, max_length=200, verbose_name='identificador')
+#  image = models.ImageField(null=True, blank=True, upload_to='photos/', verbose_name='imágen')
   initial_anamnesis = models.TextField(null=True, blank=True, verbose_name='anamnesis inicial')
 
   def age(self):
@@ -113,6 +114,7 @@ class MedicalRecord(models.Model):
   exam = models.TextField(null=True, blank=True, verbose_name='examen')
   diagnostic = models.TextField(null=True, blank=True, verbose_name='diagnóstico')
   tto = models.TextField(null=True, blank=True, verbose_name='indicaciones')
+#  attached = models.FileField(null=True, blank=True, upload_to='attach/', verbose_name='adjunto')
 
   class Meta:
     verbose_name = 'historia clínica'

@@ -140,7 +140,7 @@ SUIT_CONFIG = {
     'MENU': (
     #    'sites',
         {'app': 'clinic', 'icon': 'icon-plus-sign', 'label': 'Clinica', 'models':('clinic.client', 'clinic.patient')},
-        {'app': 'finances', 'icon': 'icon-home', 'label': 'Finanzas', 'models':('finances.item')},
+        {'app': 'finances', 'icon': 'icon-home', 'label': 'Finanzas', 'models':('finances.item', 'finances.sales')},
     #    {'label': 'Proveedores', 'icon':'icon-tag', 'url': '/support/'},
     #    {'label': 'Productos', 'icon':'icon-barcode', 'url': '/support/'},
         '-',
