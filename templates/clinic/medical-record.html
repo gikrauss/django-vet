@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-6 col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-user fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ client.name }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <span class="pull-left">
+                	<strong>Domicilio: </strong>{{ client.address }}<br>
+                	<strong>Teléfono: </strong>{{ client.phonenumber }}<br>
+                	<strong>email: </strong>{{ client.email }}<br>
+                </span>
+               	<div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-paw fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge">{{ patient.name}}</div>
+                        <div>HC: {{ patient.id }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <span class="pull-left">
+                	<strong>Especie: </strong>{{ patient.specie }}<br>
+                	<strong>Raza: </strong>{{ patient.breed }}<br>
+                	<strong>Sexo: </strong>{{ patient.sex }}<br>
+                	<strong>Castrado: </strong>{{ patient.neutered }}<br>
+                	<strong>Edad: </strong>{{ patient.age }}<br>                
+                	<strong>Peso: </strong>{{ patient.weight }}<br>
+                </span>
+              	<div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <ul class="timeline">
+            <li>
+                <div class="timeline-badge"><i class="fa fa-check"></i>
+                </div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                        <p><small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Twitter</small></p>
+                    </div>
+                    <div class="timeline-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero laboriosam dolor perspiciatis omnis exercitationem. Beatae, officia pariatur? Est cum veniam excepturi. Maiores praesentium, porro voluptas suscipit facere rem dicta, debitis.</p>
+                    </div>
+                </div>
+            </li>                                
+        </ul>
+    </div>
+    <!-- /.panel-body -->
+</div>
+{% endblock content %} 
