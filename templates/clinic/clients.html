@@ -6,8 +6,8 @@
         <h1 class="page-header">{{ title }}</h1>
     </div>
 </div>
-<div class="row pull-right"
-    <a href="#"><button type="button" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Agregar Cliente</button></a>
+<div class="row pull-right">
+    <a href="{% url 'register_client' %}" class="btn btn-success btn-sm" role="button"><i class="fa fa-plus-circle"></i> Agregar Cliente</a>
 </div>
 <div class="row">
 	<div class="col-lg-12">
@@ -16,8 +16,9 @@
                 <thead>
                     <tr>
                         <th width="40%">Apellido</th>
-                        <th width="30%">Nombre</th>
-                        <th width="30%">Email</th>
+                        <th width="25%">Nombre</th>
+                        <th width="25%">Email</th>
+                        <th width="10%">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,6 +28,10 @@
                         <td>{{ client.lastname }}</td>
                         <td>{{ client.firstname }}</td>
                         <td>{{ client.email }}</td>
+                        <td>
+                            <button type="button" class="btn btn-warning btn-circle"><i class="fa fa-trash"></i></button>
+                            <button type="button" class="btn btn-warning btn-circle"><i class="fa fa-pencil"></i></button>
+                        </td>
                     </tr>
                     {% endfor %}
                 {% else %}
