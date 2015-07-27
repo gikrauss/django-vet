@@ -3,10 +3,13 @@ from django.shortcuts import render_to_response
 from django.views.generic import TemplateView, CreateView
 from django.core.urlresolvers import reverse_lazy
 from django.template import Template, Context, RequestContext
-from clinic.models import Client, Patient
+from clinic.models import Client, Patient, Breed, Specie, Gender
 
 class IndexView(TemplateView):
 	template_name = "index.html"
+
+class ClientView(TemplateView):
+	template_name = "clinic/detail_client.html"
 
 class RegisterClient(CreateView):
 	template_name = "clinic/register.html"
@@ -27,5 +30,3 @@ class RegisterPatient(CreateView):
 		patient = Patient()
 		patient.save()
 		return render_to_response('clinic/patients.html', context_instance=RequestContext(request))
-
-

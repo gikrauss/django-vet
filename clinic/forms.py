@@ -1,12 +1,15 @@
 from django import forms
-from .models import Client, Patient
+from django.forms import ModelForm
+from .models import Specie, Gender, Breed
 
-class ClientForm(forms.ModelForm):
-	class Meta:
-		model = Client
-		fields = ['firstname', 'lastname', 'email']
+class BreedForm(ModelForm):
+    class Meta:
+        model = Breed
 
-class PatientForm(forms.ModelForm):
-	class Meta:
-		model = Patient
-		fields = ['name', 'specie', 'breed', 'gender', 'weight', 'birthday', 'identifier']
+class SpecieForm(ModelForm):
+    class Meta:
+        model = Specie
+
+class GenderForm(ModelForm):
+    class Meta:
+        model = Gender
