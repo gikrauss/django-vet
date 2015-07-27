@@ -7,7 +7,7 @@
     </div>
 </div>
 <div class="row pull-right">
-    <a href="{% url 'register_client' %}" class="btn btn-success btn-sm" role="button"><i class="fa fa-plus-circle"></i> Agregar Cliente</a>
+    <a href="{% url 'clinic:register_client' %}" class="btn btn-success btn-sm" role="button"><i class="fa fa-plus-circle"></i> Agregar Cliente</a>
 </div>
 <div class="row">
 	<div class="col-lg-12">
@@ -25,9 +25,9 @@
                 {% if queryset %}
                     {% for client in queryset %}
                     <tr>
-                        <td>{{ client.lastname }}</td>
-                        <td>{{ client.firstname }}</td>
-                        <td>{{ client.email }}</td>
+                        <td><a href="{% url 'clinic:client_detail' client.id %}">{{ client.lastname }}</a></td>
+                        <td><a href="{% url 'clinic:client_detail' client.id %}">{{ client.firstname }}</a></td>
+                        <td><a href="{% url 'clinic:client_detail' client.id %}">{{ client.email }}</a></td>
                         <td>
                             <button type="button" class="btn btn-warning btn-circle"><i class="fa fa-trash"></i></button>
                             <button type="button" class="btn btn-warning btn-circle"><i class="fa fa-pencil"></i></button>
