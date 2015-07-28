@@ -95,7 +95,7 @@ class Patient(models.Model):
 #  image = models.ImageField(null=True, blank=True, upload_to='patient_photo', verbose_name='imágen')
   initial_anamnesis = models.TextField(null=True, blank=True, verbose_name='anamnesis inicial')
 
-  def age(self):
+  def age(slef):
     today = date.today()
     return today.year - self.birthday.year - ((today.month, today.day) < (self.birthday.month, born.day))
 

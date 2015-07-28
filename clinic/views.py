@@ -1,29 +1,45 @@
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext, Context, Template
-from django.views.generic import TemplateView, CreateView, ListView
+from django.views.generic import TemplateView, CreateView
 from .models import Client, Patient, Breed, Gender, Specie
 from .forms import BreedForm, SpecieForm, GenderForm
 from django.core.urlresolvers import reverse_lazy
+from vanilla import ListView, UpdateView, DetailView, DeleteView
 
-def ClientsListView(request):
-	template_name = "clinic/clients.html"
-	title = "Clientes"
-	client = Client.objects.all()
-	context = {
-		'queryset': client,
-		'title': title
-	}
-	return render(request, 'clinic/clients.html', context)
+class ClientsList(ListView):
+    model = Client
+    template_name = "clinic/clients.html"
 
-def PatientsListView(request):
-	template_name = "clinic/patients.html"
-	title = "Pacientes"
-	patient = Patient.objects.all()
-	context = {
-		'queryset': patient,
-		'title': title
-	}
-	return render(request, 'clinic/patients.html', context)
+class EditClient(UpdateView):
+    model = Client
+    fields = ['lastname', 'firstname', 'email']
+    template_name = "clinic/client_edit.html"
+    success_url = reverse_lazy('clinic:clients_list')
+
+class ClientDetails(DetailView):
+    model = Client
+
+class DeleteClient(DeleteView):
+    model = Client
+    success_url = reverse_lazy('clinic:clients_list')
+
+
+class PatientsList(ListView):
+    model = Patient
+    template_name = "clinic/patients.html"
+
+class PatientDetails(DetailView):
+    model = Patient
+
+class EditPatient(UpdateView):
+    model = Patient
+    fields = ['name', 'owner', 'specie', 'breed', 'gender', 'birthday', 'weight', 'identifier']
+    template_name = "clinic/patient_edit.html"
+    success_url = reverse_lazy('clinic:patients_list')
+
+class DeletePatient(DeleteView):
+    model = Patient
+    success_url = reverse_lazy('clinic:patients_list')
 
 class MedicalRecordView(TemplateView):
 	template_name = "clinic/medical-record.html"
@@ -83,14 +99,6 @@ def GenderView(request):
         return render_to_response('clinic/conf/register_gender.html',
                 {'form': GenderForm()},
                 context_instance=RequestContext(request))
-
-def ClientDetailView(request):
-    template_name = "clinic/client_detail.html"
-    client = Client.objects.all()
-    context = {
-        'queryset': client,
-    }
-    return render(request, 'clinic/client_detail.html', context)
 
 class RegisterClient(CreateView):
     template_name = "clinic/register.html"
