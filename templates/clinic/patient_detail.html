@@ -7,52 +7,74 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
-<div class="row">
+<div class="row">    
     <div class="col-lg-6 col-md-12">
-        <div class="panel panel-primary">
+        <div class="panel panel-success">
             <div class="panel-heading">
                 <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-user fa-5x"></i>
+                    <div class="col-xs-2">
+                        <i class="fa fa-paw fa-4x"></i>
                     </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">{{ client.name }}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel-footer">
-                <span class="pull-left">
-                	<strong>Domicilio: </strong>{{ client.address }}<br>
-                	<strong>Teléfono: </strong>{{ client.phonenumber }}<br>
-                	<strong>email: </strong>{{ client.email }}<br>
-                </span>
-               	<div class="clearfix"></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6 col-md-12">
-        <div class="panel panel-green">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-paw fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">{{ patient.name}}</div>
+                    <div class="col-xs-10 text-left">
+                        <div><h4>{{ patient.name}}</h4></div>
                         <div>HC: {{ patient.id }}</div>
                     </div>
                 </div>
             </div>
-            <div class="panel-footer">
-                <span class="pull-left">
+            <div class="panel-body">
+                <span class="col-xs-6 pull-left">
                 	<strong>Especie: </strong>{{ patient.specie }}<br>
                 	<strong>Raza: </strong>{{ patient.breed }}<br>
-                	<strong>Sexo: </strong>{{ patient.sex }}<br>
-                	<strong>Castrado: </strong>{{ patient.neutered }}<br>
-                	<strong>Edad: </strong>{{ patient.age }}<br>                
+                	<strong>Sexo: </strong>{% if patient.gender.name == 'Hembra' %}
+                                <i class="fa fa-venus"></i>
+                            {% else %}
+                                <i class="fa fa-mars"></i>
+                            {% endif %}
+                            {{ patient.gender }}<br>
+                	<strong>Castrado: </strong>{{ patient.neutered }}<br>              
                 	<strong>Peso: </strong>{{ patient.weight }}<br>
                 </span>
+                <span class="col-xs-6">
+                    <img src="{{MEDIA_URL}}{{ patient.image }}" width="200px">
+                </span>
               	<div class="clearfix"></div>
+            </div>
+            <div class="panel-footer">
+                <div class="pull-left">
+                <a href="{% url 'clinic:edit_patient' patient.pk %}"><button type="button" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i> Modificar</button></a>                
+                </div>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <i class="fa fa-user fa-4x"></i>
+                    </div>
+                    <div class="col-xs-10 text-left">
+                        <div><h4>{{ patient.owner.lastname }} {{ patient.owner.firstname }}</h4></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <span class="pull-left">
+                    {% for address in patient.owner.addresses.all %}
+                    <strong>Domicilio: </strong>{{ address.address }}, {{ address.city }}<br>
+                    {% endfor %}
+                    {% for phonenumber in patient.owner.phone_numbers.all %}
+                    <strong>Teléfono: </strong>{{ phonenumber.number }} ({{ phonenumber.number_type }})<br>
+                    {% endfor %}
+                    <strong>email: </strong>{{ patient.owner.email }}<br>
+                </span>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-footer">
+                <br>
+                <br>
             </div>
         </div>
     </div>
@@ -60,24 +82,40 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
+        <i class="fa fa-question-circle fa-fw"></i> Anamnesis Inicial
+    </div>
+    <div class="panel-body">
+        {{ patient.initial_anamnesis}}
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-clock-o fa-fw"></i> Historia Clínica
     </div>
     <!-- /.panel-heading -->
     <div class="panel-body">
         <ul class="timeline">
+            {% for medicalrecord in patient.history.all %}
             <li>
                 <div class="timeline-badge"><i class="fa fa-check"></i>
                 </div>
                 <div class="timeline-panel">
                     <div class="timeline-heading">
-                        <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                        <p><small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Twitter</small></p>
+                        <h4 class="timeline-title">Consulta</h4>
+                        <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{ medicalrecord.date }}</small></p>
                     </div>
                     <div class="timeline-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero laboriosam dolor perspiciatis omnis exercitationem. Beatae, officia pariatur? Est cum veniam excepturi. Maiores praesentium, porro voluptas suscipit facere rem dicta, debitis.</p>
+                        <strong>Temperatura: </strong>{{ medicalrecord.temp }}<br>
+                        <strong>Anamnesis: </strong>{{ medicalrecord.anamnesis }}<br>
+                        <strong>Exámen: </strong>{{ medicalrecord.exam }}<br>
+                        <strong>Diagnósticos: </strong>{{ medicalrecord.diagnostic }}<br>
+                        <strong>Indicaciones: </strong>{{ medicalrecord.tto }}<br>
+                        <strong>Adjuntos: </strong>{{ medicalrecord.attached }}<br>
                     </div>
                 </div>
-            </li>                                
+            </li>
+            {% endfor %}                                              
         </ul>
     </div>
     <!-- /.panel-body -->

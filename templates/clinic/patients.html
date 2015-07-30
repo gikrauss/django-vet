@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">{{ title }}</h1>
+        <h1 class="page-header">Lista de Pacientes</h1>
     </div>
 </div>
 <div class="row pull-right">
@@ -33,18 +33,18 @@
                         <td><a href="{% url 'clinic:patient_details' patient.pk %}">{{ patient.specie }}</a></td>
                         <td><a href="{% url 'clinic:patient_details' patient.pk %}">{{ patient.breed }}</a></td>
                         <td>
-                            {% if patient.gender == Hembra %}
+                            {% if patient.gender.name == 'Hembra' %}
                                 <i class="fa fa-venus"></i>
                             {% else %}
                                 <i class="fa fa-mars"></i>
                             {% endif %}
                             {{ patient.gender }}
                         </td>
-                        <td>
-                            <a href="{% url 'clinic:edit_patient' patient.pk %}"><button type="button" class="btn btn-warning btn-circle"><i class="fa fa-pencil"></i></button></a>
+                        <td>                            
                             <form method="POST" action="{% url 'clinic:delete_patient' patient.pk %}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-sm btn-danger btn-circle"><i class="fa fa-trash"></i></button>
+                                <a href="{% url 'clinic:edit_patient' patient.pk %}"><button type="button" class="btn btn-warning btn-circle"><i class="fa fa-pencil"></i></button></a>
                             </form>
                         </td>
                     </tr>

@@ -14,16 +14,20 @@
 	            <strong>Cliente: </strong> {{ client.lastname }} {{ client.firstname }}
 	        </div>
 	        <div class="panel-body">
-	            <p><strong>Domicilio: </strong></p>
-	            <p><strong>Teléfono: </strong></p>           
-	            <p><strong>email: </strong></p>
+	        	{% for address in client.addresses.all %}
+                	<strong>Domicilio: </strong>{{ address.address }}, {{ address.city }}<br>
+                {% endfor %}
+                {% for phonenumber in client.phone_numbers.all %}
+                	<strong>Teléfono: </strong>{{ phonenumber.number }} ({{ phonenumber.number_type }})<br>
+                {% endfor %}          
+	            <p><strong>email: </strong>{{ client.email }}</p>
 	        </div>
 	    </div>
 	</div>
 	<div class="col-lg-6">
 	    <div class="panel panel-success">
 	        <div class="panel-heading">
-	            Mascotas:
+	            <strong>Mascotas:</strong>
 	        </div>
 	        <div class="panel-body">
 	            <table class="table table-hover">
@@ -35,7 +39,13 @@
 	            		</tr>
 	            	</thead>
 	            	<tbody>
-
+	            		{% for patient in client.pets.all %}
+	            		<tr>	            		
+	            			<td><a href="{% url 'clinic:patient_details' patient.pk %}">{{ patient.name }}</a></td>
+	            			<td><a href="{% url 'clinic:patient_details' patient.pk %}">{{ patient.specie }}</a></td>
+	            			<td><a href="{% url 'clinic:patient_details' patient.pk %}">{{ patient.breed }}</a></td>      			
+	            		</tr>
+	            		{% endfor %}
 	            	</tbody>
 	            </table>
 	        </div>

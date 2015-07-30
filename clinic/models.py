@@ -7,9 +7,9 @@ from localflavor.ar import ar_provinces
 
 
 PHONE_TYPE = (
-  ('C', 'Celular'),
-  ('F', 'Fijo'),
-  ('W', 'Trabajo'),
+  ('Celular', 'Celular'),
+  ('Fijo', 'Fijo'),
+  ('Trabajo', 'Trabajo'),
   )
 
 
@@ -30,7 +30,7 @@ class Address(models.Model):
   city = models.CharField(max_length=200, verbose_name='ciudad')
   state = models.CharField(max_length=1, choices=ar_provinces.PROVINCE_CHOICES, verbose_name='provincia')
   postal = models.CharField(max_length=6, null=True, verbose_name='código postal')
-  client = models.ForeignKey(Client)
+  client = models.ForeignKey(Client, related_name='addresses')
 
   def __unicode__(self):
     return "%s, %s, %s, %s" % (self.address, self.city, self.state, self.postal)
@@ -43,7 +43,7 @@ class Address(models.Model):
 class PhoneNumber(models.Model):
   number = models.CharField(max_length=200, verbose_name='número')
   number_type = models.CharField(max_length=1, choices=PHONE_TYPE, verbose_name='tipo')
-  client = models.ForeignKey(Client)
+  client = models.ForeignKey(Client, related_name='phone_numbers')
 
   class Meta:
     verbose_name = 'número de teléfono'
@@ -83,7 +83,7 @@ class Gender(models.Model):
 
 class Patient(models.Model):
   name = models.CharField(max_length=200, verbose_name='nombre')
-  owner = models.ForeignKey(Client, verbose_name='dueño')
+  owner = models.ForeignKey(Client, verbose_name='dueño', related_name='pets')
   specie = models.ForeignKey(Specie, null=True, verbose_name='especie')
   breed = ChainedForeignKey(Breed, null=True, chained_field="specie", chained_model_field="specie", 
         show_all=False, auto_choose=True, verbose_name='raza')
@@ -92,7 +92,7 @@ class Patient(models.Model):
   birthday = models.DateField(null=True, verbose_name='fecha de nacimiento')
   weight = models.CharField(null=True, blank=True, max_length=10, verbose_name='peso')
   identifier = models.CharField(null=True, blank=True, max_length=200, verbose_name='identificador')
-#  image = models.ImageField(null=True, blank=True, upload_to='patient_photo', verbose_name='imágen')
+  image = models.ImageField(null=True, blank=True, upload_to='patient_photo', verbose_name='imágen')
   initial_anamnesis = models.TextField(null=True, blank=True, verbose_name='anamnesis inicial')
 
   def age(slef):
@@ -108,13 +108,13 @@ class Patient(models.Model):
 
 class MedicalRecord(models.Model):
   date = models.DateField(default=date.today, verbose_name='fecha')
-  patient = models.ForeignKey(Patient)
-  temp = models.CharField(max_length=5, null=True, blank=True, verbose_name='temp')
+  patient = models.ForeignKey(Patient, related_name='history')
+  temp = models.CharField(max_length=6, null=True, blank=True, verbose_name='temp')
   anamnesis = models.TextField(null=True, blank=True, verbose_name='anamnesis')
   exam = models.TextField(null=True, blank=True, verbose_name='examen')
   diagnostic = models.TextField(null=True, blank=True, verbose_name='diagnóstico')
   tto = models.TextField(null=True, blank=True, verbose_name='indicaciones')
-#  attached = models.FileField(null=True, blank=True, upload_to='attach/', verbose_name='adjunto')
+  attached = models.FileField(null=True, blank=True, upload_to='attach/', verbose_name='adjunto')
 
   class Meta:
     verbose_name = 'historia clínica'

@@ -23,7 +23,6 @@ class DeleteClient(DeleteView):
     model = Client
     success_url = reverse_lazy('clinic:clients_list')
 
-
 class PatientsList(ListView):
     model = Patient
     template_name = "clinic/patients.html"
@@ -40,9 +39,6 @@ class EditPatient(UpdateView):
 class DeletePatient(DeleteView):
     model = Patient
     success_url = reverse_lazy('clinic:patients_list')
-
-class MedicalRecordView(TemplateView):
-	template_name = "clinic/medical-record.html"
 
 def BreedView(request):
     if request.method == "POST":
