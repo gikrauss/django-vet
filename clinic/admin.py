@@ -1,5 +1,5 @@
 from django.contrib import admin
-from clinic.models import Client, Patient, MedicalRecord, Breed, Specie, Gender, Address, PhoneNumber, Vaccine
+from clinic.models import Client, Patient, MedicalRecord, Breed, Specie, Address, PhoneNumber, Vaccine, Vac_Type
 
 
 class MedicalRecordInLine(admin.TabularInline):
@@ -39,7 +39,7 @@ class ClientAdmin(admin.ModelAdmin):
 
 admin.site.register(Breed)
 admin.site.register(Specie)
-admin.site.register(Gender)
+admin.site.register(Vac_Type)
 
 admin.site.register(Client, ClientAdmin)
 admin.site.register(Patient, PatientAdmin)

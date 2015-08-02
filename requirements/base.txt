@@ -7,4 +7,5 @@ django-localflavor==1.0
 django-suit==0.2.13
 static3==0.5.1
 wsgiref==0.1.2
+django-bootstrap-form
 

@@ -9,7 +9,7 @@
     <div class="col-lg-12">
     	<div class="panel panel-info">
         	<div class="panel-heading">
-                {% if client %}Editar Cliente{% else %}Crear Cliente{% endif%}
+                {% if provider %}Editar Proveedor{% else %}Crear Proveedor{% endif%}
         	</div>
             <form method="POST" action=""> {% csrf_token %}
         	   <div class="panel-body">                

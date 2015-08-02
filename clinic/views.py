@@ -1,14 +1,36 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 from django.template import RequestContext, Context, Template
 from django.views.generic import TemplateView, CreateView
-from .models import Client, Patient, Breed, Gender, Specie
-from .forms import BreedForm, SpecieForm, GenderForm
+from .models import Client, Address, PhoneNumber, Patient, Breed, Specie, Vac_Type
+from .forms import BreedForm, SpecieForm, Vac_TypeForm, ClientForm, AddressInlineFormSet, PhoneInlineFormSet
 from django.core.urlresolvers import reverse_lazy
 from vanilla import ListView, UpdateView, DetailView, DeleteView
 
 class ClientsList(ListView):
     model = Client
     template_name = "clinic/clients.html"
+
+def AddClient(request):
+    if request.method == 'POST':
+        form = ClientForm(request.POST)
+        if form.is_valid():
+            client = form.save()
+            formset_address = AddressInlineFormSet(request.POST, instance=client)
+            if formset_address.is_valid():
+                formset_address.save()
+                formset_phone = PhoneInlineFormSet(request.POST, instance=client)
+                if formset_phone.is_valid():
+                    formset_phone.save()
+                    return redirect('clinic:clients_list')
+            else:
+                formset_phone = PhoneInlineFormSet(request.POST)
+        else:
+            formset_address = AddressInlineFormSet(request.POST)
+    else:
+        form = ClientForm()
+        formset_address = AddressInlineFormSet()
+        formset_phone = PhoneInlineFormSet()
+    return render_to_response('clinic/register_client.html', {'form': form, 'formset_address': formset_address, 'formset_phone': formset_phone}, context_instance=RequestContext(request))
 
 class EditClient(UpdateView):
     model = Client
@@ -40,71 +62,77 @@ class DeletePatient(DeleteView):
     model = Patient
     success_url = reverse_lazy('clinic:patients_list')
 
-def BreedView(request):
+class BreedList(ListView):
+    model = Breed
+    template_name = 'clinic/conf/conf_list.html'
+
+def BreedAdd(request):
     if request.method == "POST":
 
         form = BreedForm(request.POST)
 
         if(form.is_valid()):
-        	message = 'Guardado Exitoso'
+            message = 'Registro de Raza Exitoso'
+            form.save()
         else:
-            message = 'Error, complete los campos correctamente'
+            message = 'Error'
 
-        return render_to_response('clinic/conf/register_breed.html',
-              {'message': message, 'title': "Razas"},
+        return render_to_response('clinic/conf/register.html',
+              {'message': message},
               context_instance=RequestContext(request))
     else:
-        return render_to_response('clinic/conf/register_breed.html',
-                {'form': BreedForm(),
-                'title': "Razas",
-                },
+        return render_to_response('clinic/conf/register.html',
+                {'form': SpecieForm(),
+                'var': 'Raza'},
                 context_instance=RequestContext(request))
 
-def SpecieView(request):
+class SpecieList(ListView):
+    model = Specie
+    template_name = 'clinic/conf/conf_list.html'
+
+def SpecieAdd(request):
     if request.method == "POST":
 
         form = SpecieForm(request.POST)
 
         if(form.is_valid()):
-            message = 'success'
+            message = 'Registro de Especie Exitoso'
+            form.save()
         else:
-            message = 'fail'
+            message = 'Error'
 
-        return render_to_response('clinic/conf/register_specie.html',
+        return render_to_response('clinic/conf/register.html',
               {'message': message},
               context_instance=RequestContext(request))
     else:
-        return render_to_response('clinic/conf/register_specie.html',
-                {'form': SpecieForm()},
+        return render_to_response('clinic/conf/register.html',
+                {'form': SpecieForm(),
+                'var': 'Especie'},
                 context_instance=RequestContext(request))
 
-def GenderView(request):
+class Vac_TypeList(ListView):
+    model = Vac_Type
+    template_name = 'clinic/conf/conf_list.html'
+
+def Vac_TypeAdd(request):
     if request.method == "POST":
 
-        form = GenderForm(request.POST)
+        form = Vac_TypeForm(request.POST)
 
         if(form.is_valid()):
-            message = 'Guardado'
+            message = 'Registro de Vacuna Exitoso'
+            form.save()
         else:
-            message = 'fail'
+            message = 'Error'
 
-        return render_to_response('clinic/conf/register_gender.html',
+        return render_to_response('clinic/conf/register.html',
               {'message': message},
               context_instance=RequestContext(request))
     else:
-        return render_to_response('clinic/conf/register_gender.html',
-                {'form': GenderForm()},
+        return render_to_response('clinic/conf/register.html',
+                {'form': Vac_TypeForm(),
+                'var': 'Vacuna'},
                 context_instance=RequestContext(request))
-
-class RegisterClient(CreateView):
-    template_name = "clinic/register.html"
-    model = Client
-    success_url = reverse_lazy('register_client')
-
-    def post(self, request, *args, **kwargs):
-        client = Client()
-        client.save()
-        return render_to_response('clinic/clients.html', context_instance=RequestContext(request))
 
 class RegisterPatient(CreateView):
     template_name = "clinic/register.html"

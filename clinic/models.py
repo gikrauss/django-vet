@@ -7,9 +7,9 @@ from localflavor.ar import ar_provinces
 
 
 PHONE_TYPE = (
-  ('Celular', 'Celular'),
-  ('Fijo', 'Fijo'),
-  ('Trabajo', 'Trabajo'),
+  ('C', 'Celular'),
+  ('F', 'Fijo'),
+  ('W', 'Trabajo'),
   )
 
 
@@ -71,14 +71,10 @@ class Breed(models.Model):
     verbose_name = 'raza'
 
 
-class Gender(models.Model):
-  name = models.CharField(max_length=200, verbose_name='nombre')
-
-  def __unicode__(self):
-    return self.name
-
-  class Meta:
-    verbose_name = 'sexo'
+GENDER_TYPE= (
+  ('Macho', 'Macho'),
+  ('Hembra', 'Hembra')
+  )
 
 
 class Patient(models.Model):
@@ -87,7 +83,7 @@ class Patient(models.Model):
   specie = models.ForeignKey(Specie, null=True, verbose_name='especie')
   breed = ChainedForeignKey(Breed, null=True, chained_field="specie", chained_model_field="specie", 
         show_all=False, auto_choose=True, verbose_name='raza')
-  gender = models.ForeignKey(Gender, null=True, verbose_name='sexo')
+  gender = models.CharField(max_length=6, choices=GENDER_TYPE, null=True, verbose_name='sexo')
   neutered = models.BooleanField(default=False, verbose_name='castrado')
   birthday = models.DateField(null=True, verbose_name='fecha de nacimiento')
   weight = models.CharField(null=True, blank=True, max_length=10, verbose_name='peso')
@@ -120,20 +116,26 @@ class MedicalRecord(models.Model):
     verbose_name = 'historia clínica'
 
 
-VAC_TYPE = (
-  ('Q', 'Quintuple'),
-  ('S', 'Sextuple'),
-  ('R', 'Rabia'),
-  ('T', 'Tos de las perreras'),
-  )
+class Vac_Type(models.Model):
+  name = models.CharField(max_length=200, verbose_name='tipo de vacuna')
+
+  def __unicode__(self):
+    return self.name
+
+  class Meta:
+    verbose_name = 'tipo de vacuna'
+    verbose_name_plural = 'tipos de vacunas'
 
 class Vaccine(models.Model):
-  vac_type = models.CharField(max_length=1, choices=VAC_TYPE, verbose_name='tipo')
-  patient = models.ForeignKey(Patient)
+  vac_type = models.ForeignKey(Vac_Type, related_name='vac_type')
+  patient = models.ForeignKey(Patient, related_name='vaccine')
   marca = models.CharField(max_length=10, verbose_name='marca')
   date = models.DateField(default=date.today, verbose_name='fecha de vacunación')
   expire_date = models.DateField(verbose_name='fecha de vencimiento')
-  next_vac = models.CharField(null=True, max_length=1, choices=VAC_TYPE, verbose_name='próxima vacuna')
+  next_vac = models.ForeignKey(Vac_Type, verbose_name='próxima vacuna')
+
+  def __unicode__(self):
+    return self.name
 
   class Meta:
     verbose_name='Vacuna'

@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'smart_selects',
     'localflavor',
     'finances',
+    'bootstrapform',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -138,11 +139,11 @@ SUIT_CONFIG = {
     'MENU': (
     #    'sites',
         {'app': 'clinic', 'icon': 'icon-plus-sign', 'label': 'Clinica', 'models':('clinic.client', 'clinic.patient')},
-        {'app': 'finances', 'icon': 'icon-home', 'label': 'Finanzas', 'models':('finances.item', 'finances.sales')},
+        {'app': 'finances', 'icon': 'icon-home', 'label': 'Finanzas', 'models':('finances.item', 'finances.sales', 'finances.provider')},
     #    {'label': 'Proveedores', 'icon':'icon-tag', 'url': '/support/'},
     #    {'label': 'Productos', 'icon':'icon-barcode', 'url': '/support/'},
         '-',
-        {'label': 'Configuracion', 'icon':'icon-cog', 'models': ('clinic.gender', 'clinic.specie', 'clinic.breed')},
+        {'label': 'Configuracion', 'icon':'icon-cog', 'models': ('clinic.gender', 'clinic.specie', 'clinic.breed', 'clinic.vac_type')},
 
     ),
 

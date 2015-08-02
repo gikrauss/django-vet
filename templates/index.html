@@ -1,5 +1,62 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Página index</h1>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Panel Principal</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+	<a href="{% url 'clinic:clients_list' %}"><div class="col-lg-2">
+		<div class="panel panel-info">
+            <div class="panel-heading" style="text-align: center">
+                <i class="fa fa-users fa-5x"></i>
+            </div>
+            <div class="panel-footer" style="text-align: center">
+            	<strong>Clientes</strong>
+            </div>
+        </div>
+	</div></a>
+	<a href="{% url 'clinic:patients_list' %}"><div class="col-lg-2">
+		<div class="panel panel-warning">
+            <div class="panel-heading" style="text-align: center">
+                <i class="fa fa-paw fa-5x"></i>
+            </div>
+            <div class="panel-footer" style="text-align: center">
+            	<strong>Pacientes</strong>
+            </div>
+        </div>
+	</div></a>
+	<a href="#"><div class="col-lg-2">
+		<div class="panel panel-danger">
+            <div class="panel-heading" style="text-align: center">
+                <i class="fa fa-shopping-cart fa-5x"></i>
+            </div>
+            <div class="panel-footer" style="text-align: center">
+            	<strong>Ventas</strong>
+            </div>
+        </div>
+	</div></a>
+	<a href="#"><div class="col-lg-2">
+		<div class="panel panel-default">
+            <div class="panel-heading" style="text-align: center">
+                <i class="fa fa-cart-arrow-down fa-5x"></i>
+            </div>
+            <div class="panel-footer" style="text-align: center">
+            	<strong>Compras</strong>
+            </div>
+        </div>
+	</div></a>
+	<a href="#"><div class="col-lg-2">
+		<div class="panel panel-success">
+            <div class="panel-heading" style="text-align: center">
+                <i class="fa fa-plus-circle fa-5x"></i>
+            </div>
+            <div class="panel-footer" style="text-align: center">
+            	<strong>Productos</strong>
+            </div>
+        </div>
+	</div></a>
+</div>
 {% endblock content %}

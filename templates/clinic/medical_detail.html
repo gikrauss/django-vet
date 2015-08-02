@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+        		<i class="fa fa-clock-o fa-fw"></i> Historia Clínica
+    		</div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#Historia" data-toggle="tab">H.C.</a>
+                    </li>
+                    <li><a href="#Vacunas" data-toggle="tab">Vacunas</a>
+                    </li>
+                    <li><a href="#Desparasitaciones" data-toggle="tab">Desparasitaciones</a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="Historia">
+                        <ul class="timeline">                        	
+				            {% for medicalrecord in patient.history.all %}				            
+				            <li>
+				                <div class="timeline-badge"><i class="fa fa-check"></i>
+				                </div>
+				                <div class="timeline-panel">
+				                    <div class="timeline-heading">
+				                        <h4 class="timeline-title">Consulta</h4>
+				                        <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{ medicalrecord.date }}</small></p>
+				                    </div>
+				                    <div class="timeline-body">
+				                        <strong>Temperatura: </strong>{{ medicalrecord.temp }}<br>
+				                        <strong>Anamnesis: </strong>{{ medicalrecord.anamnesis }}<br>
+				                        <strong>Exámen: </strong>{{ medicalrecord.exam }}<br>
+				                        <strong>Diagnósticos: </strong>{{ medicalrecord.diagnostic }}<br>
+				                        <strong>Indicaciones: </strong>{{ medicalrecord.tto }}<br>
+				                        <strong>Adjuntos: </strong>{{ medicalrecord.attached }}<br>
+				                    </div>
+				                </div>
+				            </li>
+				            {% endfor %}                                              
+				        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="Vacunas">
+                        <table class="table table-hover">
+				            <thead>
+				                <tr>
+				                    <th width="20%">Tipo</th>                        
+				                    <th width="20%">Marca</th>
+				                    <th width="20%">Fecha Aplicación</th>
+				                    <th width="20%">Vencimiento</th>                        
+				                    <th width="10%">Próxima</th>
+				                    <th width="10%">Acciones</th>
+
+				                </tr>
+				            </thead>
+				            <tbody>
+				            {% for vaccine in patient.vaccine.all %}
+				            	<tr>
+				            		<td>{{ vaccine.vac_type }}</td>
+				            		<td>{{ vaccine.marca }}</td>
+				            		<td>{{ vaccine.date }}</td>
+				            		<td>{{ vaccine.expire_date }}</td>
+				            		<td>{{ vaccine.next_vac }}</td>
+				            		<td>
+				            			<i class="fa fa-trash fa-fw"></i>
+				            			<i class="fa fa-check fa-fw"></i>
+				            		</td>
+				            	</tr>
+				            {% endfor %}
+				            </tbody>
+				        </table>
+                    </div>
+                    <div class="tab-pane fade" id="Desparasitaciones">
+                        <h4>Messages Tab</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-6 -->
+</div>

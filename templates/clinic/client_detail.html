@@ -26,8 +26,11 @@
 	</div>
 	<div class="col-lg-6">
 	    <div class="panel panel-success">
-	        <div class="panel-heading">
+	        <div class="panel-heading">	            
 	            <strong>Mascotas:</strong>
+	            <div class="pull-right">
+	            	<a href="{% url 'clinic:register_patient' %}" class="btn btn-success btn-xs" role="button"><i class="fa fa-plus-circle"></i> Agregar Paciente</a>
+	            </div>	            
 	        </div>
 	        <div class="panel-body">
 	            <table class="table table-hover">
@@ -47,7 +50,7 @@
 	            		</tr>
 	            		{% endfor %}
 	            	</tbody>
-	            </table>
+	            </table>	            
 	        </div>
 	    </div>
 	</div>

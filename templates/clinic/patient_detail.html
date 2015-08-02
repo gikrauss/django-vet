@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-xs-10 text-left">
                         <div><h4>{{ patient.name}}</h4></div>
-                        <div>HC: {{ patient.id }}</div>
+                        <div>HC N°: {{ patient.id }}</div>
                     </div>
                 </div>
             </div>
@@ -31,11 +31,15 @@
                                 <i class="fa fa-mars"></i>
                             {% endif %}
                             {{ patient.gender }}<br>
-                	<strong>Castrado: </strong>{{ patient.neutered }}<br>              
+                	<strong>Castrado: </strong>{% if patient.neutered %}Si{% else %}No{% endif %}<br>              
                 	<strong>Peso: </strong>{{ patient.weight }}<br>
                 </span>
                 <span class="col-xs-6">
-                    <img src="{{MEDIA_URL}}{{ patient.image }}" width="200px">
+                    {% if patient.image %}
+                    <img src="{{MEDIA_URL}}{{ patient.image }}" width="200px" class="img-rounded">
+                    {% else %}
+                    <img src="{{STATIC_URL}}img/noimage.png" width="200px">
+                    {% endif %}
                 </span>
               	<div class="clearfix"></div>
             </div>
@@ -89,35 +93,6 @@
     </div>
 </div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <i class="fa fa-clock-o fa-fw"></i> Historia Clínica
-    </div>
-    <!-- /.panel-heading -->
-    <div class="panel-body">
-        <ul class="timeline">
-            {% for medicalrecord in patient.history.all %}
-            <li>
-                <div class="timeline-badge"><i class="fa fa-check"></i>
-                </div>
-                <div class="timeline-panel">
-                    <div class="timeline-heading">
-                        <h4 class="timeline-title">Consulta</h4>
-                        <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{ medicalrecord.date }}</small></p>
-                    </div>
-                    <div class="timeline-body">
-                        <strong>Temperatura: </strong>{{ medicalrecord.temp }}<br>
-                        <strong>Anamnesis: </strong>{{ medicalrecord.anamnesis }}<br>
-                        <strong>Exámen: </strong>{{ medicalrecord.exam }}<br>
-                        <strong>Diagnósticos: </strong>{{ medicalrecord.diagnostic }}<br>
-                        <strong>Indicaciones: </strong>{{ medicalrecord.tto }}<br>
-                        <strong>Adjuntos: </strong>{{ medicalrecord.attached }}<br>
-                    </div>
-                </div>
-            </li>
-            {% endfor %}                                              
-        </ul>
-    </div>
-    <!-- /.panel-body -->
-</div>
+{% include 'clinic/medical_detail.html' %}
+
 {% endblock content %} 

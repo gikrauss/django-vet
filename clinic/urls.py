@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from .views import RegisterClient, RegisterPatient, ClientsList, EditClient, ClientDetails, DeleteClient, PatientsList, EditPatient, DeletePatient, PatientDetails
+from .views import RegisterPatient, ClientsList, EditClient, ClientDetails, DeleteClient, PatientsList, EditPatient, DeletePatient, PatientDetails, BreedList, SpecieList, Vac_TypeList
 
 urlpatterns = patterns('',    
     url(r'^clinica/pacientes/$', PatientsList.as_view(), name='patients_list'),
@@ -11,8 +11,11 @@ urlpatterns = patterns('',
     url(r'^clinica/cliente/(?P<pk>\d+)/$', ClientDetails.as_view(), name='client_details'),
     url(r'^clinica/cliente/editar/(?P<pk>\d+)/$', EditClient.as_view(), name='edit_client'),
     url(r'^clinica/cliente/borrar/(?P<pk>\d+)/$', DeleteClient.as_view(), name='delete_client'),
-    url(r'^clinica/clientes/nuevo/', RegisterClient.as_view(), name='register_client'),
-    url(r'^clinica/conf/raza/$', 'clinic.views.BreedView', name='breed_conf'),
-    url(r'^clinica/conf/especie/$', 'clinic.views.SpecieView', name='specie_conf'),
-    url(r'^clinica/conf/genero/$', 'clinic.views.GenderView', name='gender_conf'),
+    url(r'^clinica/clientes/nuevo/', 'clinic.views.AddClient', name='register_client'),
+    url(r'^clinica/conf/raza/$', BreedList.as_view(), name='breed_conf'),
+    url(r'^clinica/conf/raza/nuevo/', 'clinic.views.BreedAdd', name='breed_conf_add'),
+    url(r'^clinica/conf/especie/$', SpecieList.as_view(), name='specie_conf'),
+    url(r'^clinica/conf/especie/nuevo/', 'clinic.views.SpecieAdd', name='specie_conf_add'),
+    url(r'^clinica/conf/tipo_vac/$', Vac_TypeList.as_view(), name='vac_conf'),
+    url(r'^clinica/conf/tipo_vac/nuevo/', 'clinic.views.Vac_TypeAdd', name='vac_conf_add'),
 )

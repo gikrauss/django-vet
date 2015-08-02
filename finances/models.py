@@ -22,16 +22,40 @@ class Item(models.Model):
     class Meta:
         verbose_name = 'producto'
 
+class Provider(models.Model):
+    name = models.CharField(max_length=200, verbose_name='proveedor')
+    phone = models.CharField(max_length=20, verbose_name='telefono')
+    email = models.EmailField(max_length=200,verbose_name='email')
+
+    def __unicode__(self):
+        return '%s' %(self.name)
+
+    class Meta:
+        verbose_name = 'proveedor'
+        verbose_name_plural = 'proveedores'
+
 class Sales(models.Model):
     date = models.DateField(default=date.today, verbose_name='fecha')
     client = models.ForeignKey(Client, verbose_name='cliente')
     item = models.ForeignKey(Item, verbose_name='producto')
     cant = models.IntegerField(max_length=3, verbose_name='cantidad')
-#    price = Item.price
-
+#    price = models.ForeignKey(Item, verbose_name='precio')
 
     def __unicode__(self):
         return '%s %s %s' %(self.date, self.client, self.item)
 
     class Meta:
         verbose_name = 'venta'
+
+#class Buy(models.Model):
+#    date = models.DateField(default=date.today, verbose_name='fecha')
+#    provider = models.ForeignKey(Provider, verbose_name='cliente')
+#    item = models.ForeignKey(Item, verbose_name='producto')
+#    cant = models.IntegerField(max_length=3, verbose_name='cantidad')
+#    cost = models.ForeignKey(Item, verbose_name='precio')
+
+#    def __unicode__(self):
+#        return '%s %s %s' %(self.date, self.provider, self.item)
+
+    class Meta:
+        verbose_name = 'compra'

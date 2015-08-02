@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^index/', IndexView.as_view(), name='home'),
     url(r'^', include('clinic.urls', namespace='clinic')),
+    url(r'^', include('finances.urls', namespace='finances')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

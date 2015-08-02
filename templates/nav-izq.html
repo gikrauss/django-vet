@@ -45,7 +45,7 @@
                 <a href="#"><i class="fa fa-cog fa-fw"></i> Configuración<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="conf-vac.html">Vacunas</a>
+                        <a href="{% url 'clinic:vac_conf' %}">Vacunas</a>
                     </li>
                     <li>
                         <a href="{% url 'clinic:specie_conf' %}">Especies</a>
@@ -54,7 +54,7 @@
                         <a href="{% url 'clinic:breed_conf' %}">Razas</a>
                     </li>
                     <li>
-                        <a href="conf-prov.html">Proveedores</a>
+                        <a href="{% url 'finances:provider_list' %}">Proveedores</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
