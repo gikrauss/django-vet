@@ -3,6 +3,9 @@
         <div class="panel panel-default">
             <div class="panel-heading">
         		<i class="fa fa-clock-o fa-fw"></i> Historia Clínica
+        		<div class="row pull-right">
+					<a href="{% url 'clinic:register_medicalrecord' %}" class="btn btn-success btn-sm" role="button"><i class="fa fa-plus-circle"></i> Agregar Evento</a>
+				</div>
     		</div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -18,7 +21,7 @@
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div class="tab-pane fade in active" id="Historia">
+                    <div class="tab-pane fade in active" id="Historia">                    	
                         <ul class="timeline">                        	
 				            {% for medicalrecord in patient.history.all %}				            
 				            <li>

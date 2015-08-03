@@ -33,7 +33,7 @@
                         <td><a href="{% url 'clinic:patient_details' patient.pk %}">{{ patient.specie }}</a></td>
                         <td><a href="{% url 'clinic:patient_details' patient.pk %}">{{ patient.breed }}</a></td>
                         <td>
-                            {% if patient.gender.name == 'Hembra' %}
+                            {% if patient.gender == 'Hembra' %}
                                 <i class="fa fa-venus"></i>
                             {% else %}
                                 <i class="fa fa-mars"></i>
@@ -44,7 +44,7 @@
                             <form method="POST" action="{% url 'clinic:delete_patient' patient.pk %}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-sm btn-danger btn-circle"><i class="fa fa-trash"></i></button>
-                                <a href="{% url 'clinic:edit_patient' patient.pk %}"><button type="button" class="btn btn-warning btn-circle"><i class="fa fa-pencil"></i></button></a>
+                                <a href="{% url 'clinic:edit_patient' patient.pk %}"><i class="fa fa-pencil"></i></a>
                             </form>
                         </td>
                     </tr>

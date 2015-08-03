@@ -25,7 +25,7 @@
                 <span class="col-xs-6 pull-left">
                 	<strong>Especie: </strong>{{ patient.specie }}<br>
                 	<strong>Raza: </strong>{{ patient.breed }}<br>
-                	<strong>Sexo: </strong>{% if patient.gender.name == 'Hembra' %}
+                	<strong>Sexo: </strong>{% if patient.gender == 'Hembra' %}
                                 <i class="fa fa-venus"></i>
                             {% else %}
                                 <i class="fa fa-mars"></i>

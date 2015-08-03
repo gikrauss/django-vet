@@ -19,6 +19,7 @@
                 <form method="POST" action=""> {% csrf_token %}
 					{{ form.as_p }}					
                     <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Registrar</button>
+                    <button type="reset" class="btn btn-primary">Limpiar</button>
 				</form>
                 {% endif %}
         	</div>

@@ -1,8 +1,7 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.template import RequestContext, Context, Template
-from django.views.generic import TemplateView, CreateView
 from .models import Client, Address, PhoneNumber, Patient, Breed, Specie, Vac_Type
-from .forms import BreedForm, SpecieForm, Vac_TypeForm, ClientForm, AddressInlineFormSet, PhoneInlineFormSet
+from .forms import BreedForm, SpecieForm, Vac_TypeForm, ClientForm, AddressInlineFormSet, PhoneInlineFormSet, PatientForm, MedicalRecordForm, VaccineForm, ComplementaryForm
 from django.core.urlresolvers import reverse_lazy
 from vanilla import ListView, UpdateView, DetailView, DeleteView
 
@@ -49,6 +48,16 @@ class PatientsList(ListView):
     model = Patient
     template_name = "clinic/patients.html"
 
+def AddPatient(request):
+    if request.method == 'POST':
+        form = PatientForm(request.POST)
+        if form.is_valid():
+            patient = form.save()
+            return redirect('clinic:patients_list')
+    else:
+        form = PatientForm()
+    return render_to_response('clinic/register_patient.html', {'form': form}, context_instance=RequestContext(request))
+
 class PatientDetails(DetailView):
     model = Patient
 
@@ -61,6 +70,26 @@ class EditPatient(UpdateView):
 class DeletePatient(DeleteView):
     model = Patient
     success_url = reverse_lazy('clinic:patients_list')
+
+def AddMedicalRecord(request):
+    if request.method == 'POST':
+        form1 = MedicalRecordForm(request.POST)
+        form2 = VaccineForm(request.POST)
+        form3 = ComplementaryForm(request.POST)
+        if form1.is_valid():
+            medical_record = form1.save()
+            return redirect('clinic:patient_detail')
+        if form2.is_valid():
+            medical_record = form2.save()
+            return redirect('clinic:patient_detail')
+        if form3.is_valid():
+            medical_record = form3.save()
+            return redirect('clinic:patient_detail')
+    else:
+        form1 = MedicalRecordForm()
+        form2 = VaccineForm()
+        form3 = ComplementaryForm()
+    return render_to_response('clinic/register_medicalrecord.html', {'form_consult': form1, 'form_vac': form2, 'form_complementary': form3}, context_instance=RequestContext(request))
 
 class BreedList(ListView):
     model = Breed
@@ -133,13 +162,3 @@ def Vac_TypeAdd(request):
                 {'form': Vac_TypeForm(),
                 'var': 'Vacuna'},
                 context_instance=RequestContext(request))
-
-class RegisterPatient(CreateView):
-    template_name = "clinic/register.html"
-    model = Patient
-    success_url = reverse_lazy('register_patient')
-
-    def post(self, request, *args, **kwargs):
-        patient = Patient()
-        patient.save()
-        return render_to_response('clinic/patients.html', context_instance=RequestContext(request))

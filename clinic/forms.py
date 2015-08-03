@@ -1,6 +1,6 @@
 from django import forms
 from django.forms.models import inlineformset_factory
-from .models import Breed, Specie, Vac_Type, Client, Address, PhoneNumber
+from .models import Breed, Specie, Vac_Type, Client, Address, PhoneNumber, Patient, MedicalRecord, Vaccine, Complementary
 from localflavor.ar import ar_provinces  
 
 class BreedForm(forms.ModelForm):
@@ -22,3 +22,19 @@ class ClientForm(forms.ModelForm):
 
 AddressInlineFormSet = inlineformset_factory(Client, Address, extra=1)
 PhoneInlineFormSet = inlineformset_factory(Client, PhoneNumber, extra=1)
+
+class PatientForm(forms.ModelForm):
+  class Meta:
+    model = Patient
+
+class MedicalRecordForm(forms.ModelForm):
+  class Meta:
+    model = MedicalRecord
+
+class VaccineForm(forms.ModelForm):
+  class Meta:
+    model = Vaccine
+
+class ComplementaryForm(forms.ModelForm):
+  class Meta:
+    model = Complementary

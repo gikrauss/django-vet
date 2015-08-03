@@ -1,12 +1,13 @@
 from django.conf.urls import patterns, include, url
-from .views import RegisterPatient, ClientsList, EditClient, ClientDetails, DeleteClient, PatientsList, EditPatient, DeletePatient, PatientDetails, BreedList, SpecieList, Vac_TypeList
+from .views import ClientsList, EditClient, ClientDetails, DeleteClient, PatientsList, EditPatient, DeletePatient, PatientDetails, BreedList, SpecieList, Vac_TypeList
 
 urlpatterns = patterns('',    
     url(r'^clinica/pacientes/$', PatientsList.as_view(), name='patients_list'),
     url(r'^clinica/paciente/(?P<pk>\d+)/$', PatientDetails.as_view(), name='patient_details'),
+    url(r'^clinica/paciente/medical/$', 'clinic.views.AddMedicalRecord', name='register_medicalrecord'),
     url(r'^clinica/paciente/editar/(?P<pk>\d+)/$', EditPatient.as_view(), name='edit_patient'),
     url(r'^clinica/paciente/borrar/(?P<pk>\d+)/$', DeletePatient.as_view(), name='delete_patient'),
-    url(r'^clinica/pacientes/nuevo/', RegisterPatient.as_view(), name='register_patient'),
+    url(r'^clinica/paciente/nuevo/', 'clinic.views.AddPatient', name='register_patient'),
     url(r'^clinica/clientes/$', ClientsList.as_view(), name='clients_list'),
     url(r'^clinica/cliente/(?P<pk>\d+)/$', ClientDetails.as_view(), name='client_details'),
     url(r'^clinica/cliente/editar/(?P<pk>\d+)/$', EditClient.as_view(), name='edit_client'),
