@@ -19,10 +19,11 @@ class Client(models.Model):
   email = models.EmailField(max_length=200, null=True, blank=True, verbose_name='email')
 
   def __unicode__(self):
-    return "%s %s" % (self.firstname, self.lastname)
+    return "%s %s" % (self.lastname, self.firstname)
 
   class Meta:
     verbose_name = 'cliente'
+    ordering = ['lastname']
 
 
 class Address(models.Model):
@@ -58,6 +59,7 @@ class Specie(models.Model):
 
   class Meta:
     verbose_name = 'especie'
+    ordering = ['name']
 
 
 class Breed(models.Model):
@@ -69,6 +71,7 @@ class Breed(models.Model):
 
   class Meta:
     verbose_name = 'raza'
+    ordering = ['name']
 
 
 GENDER_TYPE= (
@@ -81,31 +84,37 @@ class Patient(models.Model):
   name = models.CharField(max_length=200, verbose_name='nombre')
   owner = models.ForeignKey(Client, verbose_name='dueño', related_name='pets')
   specie = models.ForeignKey(Specie, null=True, verbose_name='especie')
-  breed = ChainedForeignKey(Breed, null=True, chained_field="specie", chained_model_field="specie", 
+  breed = ChainedForeignKey(Breed, null=True, chained_field="specie", chained_model_field="specie",
         show_all=False, auto_choose=True, verbose_name='raza')
   gender = models.CharField(max_length=6, choices=GENDER_TYPE, null=True, verbose_name='sexo')
   neutered = models.BooleanField(default=False, verbose_name='castrado')
   birthday = models.DateField(null=True, verbose_name='fecha de nacimiento')
   weight = models.CharField(null=True, blank=True, max_length=10, verbose_name='peso')
+  color = models.CharField(null=True, blank=True, max_length=200, verbose_name='pelaje')
   identifier = models.CharField(null=True, blank=True, max_length=200, verbose_name='identificador')
   image = models.ImageField(null=True, blank=True, upload_to='patient_photo', verbose_name='imágen')
   initial_anamnesis = models.TextField(null=True, blank=True, verbose_name='anamnesis inicial')
 
-  def age(slef):
+  def age(self):
     today = date.today()
-    return today.year - self.birthday.year - ((today.month, today.day) < (self.birthday.month, born.day))
+    return today.year - self.birthday.year - ((today.month, today.day) < (self.birthday.month, self.birthday.day))
 
   def __unicode__(self):
     return self.name
 
   class Meta:
     verbose_name = 'paciente'
+    ordering = ['name']
 
 
 class MedicalRecord(models.Model):
-  date = models.DateField(default=date.today, verbose_name='fecha')
   patient = models.ForeignKey(Patient, related_name='history')
+  date = models.DateField(default=date.today, verbose_name='fecha')
+  motive = models.TextField(null=True, blank=True, verbose_name='motivo de consulta')
   temp = models.CharField(max_length=6, null=True, blank=True, verbose_name='temp')
+  fc = models.CharField(max_length=6, null=True, blank=True, verbose_name='fc')
+  fr = models.CharField(max_length=6, null=True, blank=True, verbose_name='fr')
+  tllc = models.CharField(max_length=6, null=True, blank=True, verbose_name='tllc')
   anamnesis = models.TextField(null=True, blank=True, verbose_name='anamnesis')
   exam = models.TextField(null=True, blank=True, verbose_name='examen')
   diagnostic = models.TextField(null=True, blank=True, verbose_name='diagnóstico')
@@ -118,6 +127,7 @@ class MedicalRecord(models.Model):
 
 class Vac_Type(models.Model):
   name = models.CharField(max_length=200, verbose_name='tipo de vacuna')
+  description = models.CharField(max_length=200, null=True, blank=True, verbose_name='descripción')
 
   def __unicode__(self):
     return self.name
@@ -125,20 +135,33 @@ class Vac_Type(models.Model):
   class Meta:
     verbose_name = 'tipo de vacuna'
     verbose_name_plural = 'tipos de vacunas'
+    ordering = ['name']
 
 class Vaccine(models.Model):
-  vac_type = models.ForeignKey(Vac_Type, related_name='tipo vacuna')
   patient = models.ForeignKey(Patient, related_name='vaccine')
-  marca = models.CharField(max_length=20, verbose_name='marca')
+  vac_type = models.ForeignKey(Vac_Type, related_name='tipo vacuna', verbose_name='tipo de vacuna')
   date = models.DateField(default=date.today, verbose_name='fecha de vacunación')
+  marca = models.CharField(max_length=20, verbose_name='marca')
   expire_date = models.DateField(verbose_name='fecha de vencimiento')
   next_vac = models.ForeignKey(Vac_Type, verbose_name='próxima vacuna')
+
+  def __unicode__(self):
+    return self.marca
+
+  class Meta:
+    verbose_name='Vacuna'
+
+class Deworming(models.Model):
+  patient = models.ForeignKey(Patient, related_name='deworming')
+  date = models.DateField(default=date.today, verbose_name='fecha de desparasitación')
+  name = models.CharField(max_length=200, verbose_name='antiparasitario')
+  dose = models.CharField(null=True, blank=True, max_length=200, verbose_name='posología')
 
   def __unicode__(self):
     return self.name
 
   class Meta:
-    verbose_name='Vacuna'
+    verbose_name='Antiparasitario'
 
 class Complementary(models.Model):
   patient = models.ForeignKey(Patient, related_name='complementary')
@@ -153,3 +176,17 @@ class Complementary(models.Model):
   class Meta:
     verbose_name='Metodo Complementario'
     verbose_name_plural='Metodos Complementarios'
+
+class Analysis(models.Model):
+  patient = models.ForeignKey(Patient, related_name='analysis')
+  name = models.CharField(max_length=200, verbose_name='Análisis Sanguineo')
+  date = models.DateField(default=date.today, verbose_name='fecha')
+  description = models.TextField(null=True, blank=True, verbose_name='descripción')
+  attached = models.FileField(null=True, blank=True, upload_to='attach/complementary', verbose_name='adjunto')
+
+  def __unicode__(self):
+    return self.name
+
+  class Meta:
+    verbose_name='Análisis Sanguineo'
+    verbose_name_plural='Análisis Sanguineos'

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load bootstrap %}
+<div class="col-lg-12">
+    <h1 class="page-header">Agregar un nuevo {{ title }}</h1>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+    	<div class="panel panel-info">
+        	<div class="panel-heading">
+                Complete los datos:
+        	</div>
+        	   <div class="panel-body">
+                    <form method="POST" action=""> {% csrf_token %}
+                        <div class="row">
+                            <div class="col-xs-12">
+					           {{ form|bootstrap }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div align="center">
+                                <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Registrar</button>
+                                <button type="reset" class="btn btn-success">Limpiar</button>
+                            </div>
+                        </div>
+                    </form>
+        	   </div>
+        	   <div class="panel-footer">
+                    <a href="javascript:history.back()"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Volver</button></a>
+        	   </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

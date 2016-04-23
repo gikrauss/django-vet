@@ -3,29 +3,42 @@
 {% block content %}
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">{{ var }}</h1>
+        <h1 class="page-header">{{ title }}</h1>
     </div>
 </div>
-<div class="row pull-right">
-    {% if breed_list %}
-    <a href="{% url 'clinic:breed_conf_add' %}" class="btn btn-success btn-sm" role="button"><i class="fa fa-plus-circle"></i> Agregar Raza</a>
-    {% endif %}
-    {% if specie_list %}
-    <a href="{% url 'clinic:specie_conf_add' %}" class="btn btn-success btn-sm" role="button"><i class="fa fa-plus-circle"></i> Agregar Especie</a>
-    {% endif %}
-    {% if vac_type_list %}
-    <a href="{% url 'clinic:vac_conf_add' %}" class="btn btn-success btn-sm" role="button"><i class="fa fa-plus-circle"></i> Agregar Vacuna</a>
-    {% endif %}
+<div class="row">
+    <div class="col-xs-6 col-md-3">
+        <div class="input-group custom-search-form">
+            <input type="text" class="form-control" placeholder="Buscar...">
+            <span class="input-group-btn">
+                <button method="GET" class="btn btn-default" type="button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+    <div class="col-xs-3 col-xs-offset-3 col-md-2 col-md-offset-7">
+        {% if breed_list %}
+        <a href="{% url 'clinic:breed_conf_add' %}" class="btn btn-success btn-sm" role="button"><i class="fa fa-plus-circle"></i> Agregar Raza</a>
+        {% endif %}
+        {% if specie_list %}
+        <a href="{% url 'clinic:specie_conf_add' %}" class="btn btn-success btn-sm" role="button"><i class="fa fa-plus-circle"></i> Agregar Especie</a>
+        {% endif %}
+        {% if vac_type_list %}
+        <a href="{% url 'clinic:vac_conf_add' %}" class="btn btn-success btn-sm" role="button"><i class="fa fa-plus-circle"></i> Agregar Vacuna</a>
+        {% endif %}
+    </div>    
 </div>
 <div class="row">
 	<div class="col-lg-12">
 		<div class="table-responsive">
             {% if breed_list %}
-            <table class="table table-hover">
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th width="20%">Nombre</th>
-                        <th width="20%">Especie</th>
+                        <th width="40%">Nombre</th>
+                        <th width="50%">Especie</th>
+                        <th width="10%">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,38 +46,66 @@
                     <tr>
                         <td>{{ breed.name }}</td>
                         <td>{{ breed.specie }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'clinic:delete_breed' breed.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger btn-circle"><i class="fa fa-trash"></i></button>
+                                |
+                                <a href="{% url 'clinic:edit_breed' breed.pk %}" class="btn btn-sm btn-primary btn-circle"><i class="fa fa-pencil"></i></a>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
             {% endif %}
             {% if specie_list %}
-            <table class="table table-hover">
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th width="20%">Nombre</th>
+                        <th width="90%">Nombre</th>
+                        <th width="10%">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for specie in specie_list %}
                     <tr>
                         <td>{{ specie.name }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'clinic:delete_specie' specie.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger btn-circle"><i class="fa fa-trash"></i></button>
+                                |
+                                <a href="{% url 'clinic:edit_specie' specie.pk %}" class="btn btn-sm btn-primary btn-circle"><i class="fa fa-pencil"></i></a>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
             {% endif %}
             {% if vac_type_list %}
-            <table class="table table-hover">
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th width="20%">Nombre</th>
+                        <th width="40%">Nombre</th>
+                        <th width="50%">Descripción</th>
+                        <th width="10%">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for vac_type in vac_type_list %}
                     <tr>
                         <td>{{ vac_type.name }}</td>
+                        <td>{{ vac_type.description }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'clinic:delete_vac_type' vac_type.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger btn-circle"><i class="fa fa-trash"></i></button>
+                                |
+                                <a href="{% url 'clinic:edit_vac_type' vac_type.pk %}" class="btn btn-sm btn-primary btn-circle"><i class="fa fa-pencil"></i></a>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

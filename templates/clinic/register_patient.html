@@ -4,25 +4,76 @@
 
 {% load bootstrap %}
 <div class="col-lg-12">
-    <h1 class="page-header">Agregar un nuevo Paciente</h1>
+    <h1 class="page-header">Agregar Mascota</h1>
 </div>
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-xs-12">
     	<div class="panel panel-info">
         	<div class="panel-heading">
-                Complete los datos:
-        	</div>            
-        	   <div class="panel-body">   
-                    <form method="POST" action=""> {% csrf_token %}             
-					    {{ form|bootstrap }}
-                        <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Registrar</button>
-                        <button type="reset" class="btn btn-success">Limpiar</button>	
-                    </form>		
+                <i class="fa fa-paw"></i> Complete los datos:
+        	</div>
+        	   <div class="panel-body">
+                    <form method="POST" action="" role="form">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+                        <div class="row">
+                            <div class="col-xs-6 col-md-6">
+                                {% include "forms/field.html" with field=form.name %}
+                            </div>
+                            <div class="col-xs-6 col-md-6">
+                                {% include "forms/field.html" with field=form.owner %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-md-4">
+                                {% include "forms/field.html" with field=form.specie endinput='<a href="#"><i class="fa fa-plus-square-o fa-lg"></i></a>' %}
+                            </div>
+                            <div class="col-xs-6 col-md-4">
+                                {% include "forms/field.html" with field=form.breed endinput='<a href="#"><i class="fa fa-plus-square-o fa-lg"></i></a>' %}
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                {% include "forms/field.html" with field=form.gender %}
+                            </div>
+                            <div class="col-xs-6 col-md-1">
+                                {% include "forms/field.html" with field=form.neutered %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4 col-md-3">
+                                {% include "forms/field.html" with field=form.birthday icon='calendar' %}
+                            </div>
+                            <div class="col-xs-4 col-md-3">
+                                {% include "forms/field.html" with field=form.weight endinput='Kg' %}
+                            </div>
+                            <div class="col-xs-6 col-md-6">
+                                {% include "forms/field.html" with field=form.identifier %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                {% include "forms/field.html" with field=form.image %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                {% include "forms/field.html" with field=form.initial_anamnesis %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div align="center">
+                                <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Registrar</button>
+                                <button type="reset" class="btn btn-success">Limpiar</button>
+                            </div>
+                        </div>
+                    </form>
         	   </div>
         	   <div class="panel-footer">
                     <a href="javascript:history.back()"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Volver</button></a>
         	   </div>
-            
+
         </div>
     </div>
 </div>

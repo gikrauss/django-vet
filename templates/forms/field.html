@@ -1,0 +1,32 @@
+{% load widget_tweaks %}
+
+{% with field_class=field_class|default:"form-control" %}
+
+<div class="form-group {% if field.errors %}has-error{% endif %}">
+	{% if show_label == None or show_label == True %}
+    <label class="control-label {%if inline %}sr-only{% endif %}" for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {% endif %}
+    {% if icon or prefix or endinput %}
+    	<div class="input-group">
+					{% if icon or prefix %}
+            <span class="input-group-addon">
+            {{ prefix }}
+            {% if icon %}<i class="fa fa-{{icon}}"></i>{% endif %}
+            </span>
+					{% endif %}
+        	{% render_field field class+=field_class %}
+					{% if endinput %}
+						<span class="input-group-addon">
+						{{ endinput }}
+						</span>
+					{% endif %}
+    	</div>
+    {% else %}
+    	{% render_field field class+=field_class %}
+    {% endif %}
+    {% for error in field.errors %}
+    <span class="help-block m-b-none">{{ error }}</span>
+    {% endfor %}
+</div>
+
+{% endwith %}

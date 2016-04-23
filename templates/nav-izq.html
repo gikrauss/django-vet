@@ -37,24 +37,24 @@
                         <a href="purchase.html"><i class="fa fa-cart-arrow-down fa-fw"></i> Compras</a>
                     </li>
                     <li>
-                        <a href="stock.html"><i class="fa fa-database fa-fw"></i> Stock</a>
+                        <a href="{% url 'finances:item_list' %}"><i class="fa fa-database fa-fw"></i> Productos</a>
+                    </li>                    
+                    <li>
+                        <a href="{% url 'finances:provider_list' %}"><i class="fa fa-truck fa-fw"></i> Proveedores</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
             <li>
-                <a href="#"><i class="fa fa-cog fa-fw"></i> Configuración<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-cogs fa-fw"></i> Configuración<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="{% url 'clinic:vac_conf' %}">Vacunas</a>
+                        <a href="{% url 'clinic:vac_conf' %}"><i class="fa fa-bars fa-fw"></i> Vacunas</a>
                     </li>
                     <li>
-                        <a href="{% url 'clinic:specie_conf' %}">Especies</a>
+                        <a href="{% url 'clinic:specie_conf' %}"><i class="fa fa-bars fa-fw"></i> Especies</a>
                     </li>
                     <li>
-                        <a href="{% url 'clinic:breed_conf' %}">Razas</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'finances:provider_list' %}">Proveedores</a>
+                        <a href="{% url 'clinic:breed_conf' %}"><i class="fa fa-bars fa-fw"></i> Razas</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->

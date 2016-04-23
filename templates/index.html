@@ -3,12 +3,19 @@
 {% block content %}
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Panel Principal</h1>
+        <ol class="breadcrumb">
+          <li class="active">Home</li>
+        </ol> 
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header"><strong>Escritorio</strong></h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
 <div class="row">
-	<a href="{% url 'clinic:clients_list' %}"><div class="col-lg-2">
+	<a href="{% url 'clinic:clients_list' %}"><div class="col-xs-6 col-lg-2">
 		<div class="panel panel-info">
             <div class="panel-heading" style="text-align: center">
                 <i class="fa fa-users fa-5x"></i>
@@ -18,7 +25,7 @@
             </div>
         </div>
 	</div></a>
-	<a href="{% url 'clinic:patients_list' %}"><div class="col-lg-2">
+	<a href="{% url 'clinic:patients_list' %}"><div class="col-xs-6 col-lg-2">
 		<div class="panel panel-warning">
             <div class="panel-heading" style="text-align: center">
                 <i class="fa fa-paw fa-5x"></i>
@@ -28,7 +35,7 @@
             </div>
         </div>
 	</div></a>
-	<a href="#"><div class="col-lg-2">
+	<a href="{% url 'finances:add_sale' %}"><div class="col-xs-6 col-lg-2">
 		<div class="panel panel-danger">
             <div class="panel-heading" style="text-align: center">
                 <i class="fa fa-shopping-cart fa-5x"></i>
@@ -38,7 +45,7 @@
             </div>
         </div>
 	</div></a>
-	<a href="#"><div class="col-lg-2">
+	<a href="#"><div class="col-xs-6 col-lg-2">
 		<div class="panel panel-default">
             <div class="panel-heading" style="text-align: center">
                 <i class="fa fa-cart-arrow-down fa-5x"></i>
@@ -48,15 +55,55 @@
             </div>
         </div>
 	</div></a>
-	<a href="#"><div class="col-lg-2">
-		<div class="panel panel-success">
+    <a href="{% url 'finances:provider_list' %}"><div class="col-xs-6 col-lg-2">
+        <div class="panel panel-success">
             <div class="panel-heading" style="text-align: center">
-                <i class="fa fa-plus-circle fa-5x"></i>
+                <i class="fa fa-truck fa-5x"></i>
+            </div>
+            <div class="panel-footer" style="text-align: center">
+                <strong>Proveedores</strong>
+            </div>
+        </div>
+    </div></a>
+	<a href="{% url 'finances:item_list' %}"><div class="col-xs-6 col-lg-2">
+		<div class="panel panel-info">
+            <div class="panel-heading" style="text-align: center">
+                <i class="fa fa-barcode fa-5x"></i>
             </div>
             <div class="panel-footer" style="text-align: center">
             	<strong>Productos</strong>
             </div>
         </div>
 	</div></a>
+    <a href="#"><div class="col-xs-6 col-lg-2">
+        <div class="panel panel-warning">
+            <div class="panel-heading" style="text-align: center">
+                <i class="fa fa-scissors fa-5x"></i>
+            </div>
+            <div class="panel-footer" style="text-align: center">
+                <strong>Peluqueria</strong>
+            </div>
+        </div>
+    </div></a>
+    <a href="#"><div class="col-xs-6 col-lg-2">
+        <div class="panel panel-danger">
+            <div class="panel-heading" style="text-align: center">
+                <i class="fa fa-calendar fa-5x"></i>
+            </div>
+            <div class="panel-footer" style="text-align: center">
+                <strong>Turnos</strong>
+            </div>
+        </div>
+    </div></a>
+    <a href="#"><div class="col-xs-6 col-lg-2">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="text-align: center">
+                <i class="fa fa-phone fa-5x"></i>
+            </div>
+            <div class="panel-footer" style="text-align: center">
+                <strong>Contactos</strong>
+            </div>
+        </div>
+    </div></a>
 </div>
 {% endblock content %}

@@ -2,9 +2,25 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-        		<i class="fa fa-clock-o fa-fw"></i> Historia Clínica
-        		<div class="row pull-right">
-					<a href="{% url 'clinic:register_medicalrecord' %}" class="btn btn-success btn-sm" role="button"><i class="fa fa-plus-circle"></i> Agregar Evento</a>
+            	<div class="row">
+            		<div class="col-xs-9 col-md-9 col-lg-10">
+		    			<i class="fa fa-clock-o fa-fw"></i> Historia Clínica
+		    		</div>
+		    		<div class="col-xs-3 col-md-3 col-lg-2">
+						<div class="dropdown">
+						  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						    Agregar Evento
+						    <span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						    <li><a href="{% url 'clinic:register_consult' patient.pk %}">Consulta</a></li>
+						    <li><a href="{% url 'clinic:register_vaccine' patient.pk %}">Vacuna</a></li>
+						    <li><a href="{% url 'clinic:register_deworming' patient.pk %}">Desparasitación</a></li>
+						    <li><a href="{% url 'clinic:register_complementary' patient.pk %}">Método Complementario</a></li>
+						    <li><a href="#">Análisis Clínicos</a></li>
+						  </ul>
+						</div>
+					</div>
 				</div>
     		</div>
             <!-- /.panel-heading -->
@@ -17,15 +33,17 @@
                     </li>
                     <li><a href="#Desparasitaciones" data-toggle="tab">Desparasitaciones</a>
                     </li>
+                    <li><a href="#Complementarios" data-toggle="tab">Complementarios</a>
+                    </li>
                 </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div class="tab-pane fade in active" id="Historia">                    	
-                        <ul class="timeline">                        	
-				            {% for medicalrecord in patient.history.all %}				            
+                    <div class="tab-pane fade in active" id="Historia">
+                        <ul class="timeline">
+				            {% for medicalrecord in patient.history.all reversed %}
 				            <li>
-				                <div class="timeline-badge"><i class="fa fa-check"></i>
+				                <div class="timeline-badge"><i class="fa fa-stethoscope"></i>
 				                </div>
 				                <div class="timeline-panel">
 				                    <div class="timeline-heading">
@@ -33,7 +51,11 @@
 				                        <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{ medicalrecord.date }}</small></p>
 				                    </div>
 				                    <div class="timeline-body">
+                                <strong>Motivo de Consulta: </strong>{{ medicalrecord.motive }}<br>
 				                        <strong>Temperatura: </strong>{{ medicalrecord.temp }}<br>
+                                <strong>Fc: </strong>{{ medicalrecord.fc }}<br>
+                                <strong>Fr: </strong>{{ medicalrecord.fe }}<br>
+                                <strong>TLLC: </strong>{{ medicalrecord.tllc }}<br>
 				                        <strong>Anamnesis: </strong>{{ medicalrecord.anamnesis }}<br>
 				                        <strong>Exámen: </strong>{{ medicalrecord.exam }}<br>
 				                        <strong>Diagnósticos: </strong>{{ medicalrecord.diagnostic }}<br>
@@ -42,42 +64,90 @@
 				                    </div>
 				                </div>
 				            </li>
-				            {% endfor %}                                              
+				            {% endfor %}
 				        </ul>
                     </div>
                     <div class="tab-pane fade" id="Vacunas">
                         <table class="table table-hover">
-				            <thead>
-				                <tr>
-				                    <th width="20%">Tipo</th>                        
-				                    <th width="20%">Marca</th>
-				                    <th width="20%">Fecha Aplicación</th>
-				                    <th width="20%">Vencimiento</th>                        
-				                    <th width="10%">Próxima</th>
-				                    <th width="10%">Acciones</th>
+      				            <thead>
+      				                <tr>
+      				                    <th width="20%">Tipo</th>
+      				                    <th width="20%">Marca</th>
+      				                    <th width="20%">Fecha Aplicación</th>
+      				                    <th width="20%">Vencimiento</th>
+      				                    <th width="10%">Próxima</th>
+      				                    <th width="10%">Acciones</th>
 
-				                </tr>
-				            </thead>
-				            <tbody>
-				            {% for vaccine in patient.vaccine.all %}
-				            	<tr>
-				            		<td>{{ vaccine.vac_type }}</td>
-				            		<td>{{ vaccine.marca }}</td>
-				            		<td>{{ vaccine.date }}</td>
-				            		<td>{{ vaccine.expire_date }}</td>
-				            		<td>{{ vaccine.next_vac }}</td>
-				            		<td>
-				            			<i class="fa fa-trash fa-fw"></i>
-				            			<i class="fa fa-check fa-fw"></i>
-				            		</td>
-				            	</tr>
-				            {% endfor %}
-				            </tbody>
-				        </table>
+      				                </tr>
+      				            </thead>
+      				            <tbody>
+      				            {% for vaccine in patient.vaccine.all %}
+      				            	<tr>
+      				            		<td><span class="label label-primary">{{ vaccine.vac_type }}</span></td>
+      				            		<td>{{ vaccine.marca }}</td>
+      				            		<td>{{ vaccine.date }}</td>
+      				            		<td>{{ vaccine.expire_date }}</td>
+      				            		<td>{{ vaccine.next_vac }}</td>
+      				            		<td>
+      				            			<a href="#"><i class="fa fa-trash fa-fw"></i></a>
+      				            			<i class="fa fa-check fa-fw"></i>
+      				            		</td>
+      				            	</tr>
+      				            {% endfor %}
+      				            </tbody>
+      				          </table>
                     </div>
                     <div class="tab-pane fade" id="Desparasitaciones">
-                        <h4>Messages Tab</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                      <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th width="30%">Producto</th>
+                                <th width="20%">Fecha</th>
+                                <th width="40%">Posologia</th>
+                                <th width="10%">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for deworming in patient.deworming.all %}
+                          <tr>
+                            <td><span class="label label-primary">{{ deworming.name }}</span></td>
+                            <td>{{ deworming.date }}</td>
+                            <td>{{ deworming.dose}}</td>
+                            <td>
+                              <i class="fa fa-trash fa-fw"></i>
+                              <i class="fa fa-check fa-fw"></i>
+                            </td>
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="tab-pane fade" id="Complementarios">
+                      <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th width="15%">Fecha</th>
+                                <th width="30%">Nombre</th>
+                                <th width="45%">Descripción</th>
+                                <th width="10%">Adjunto</th>
+                                <th width="10%">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for complementary in patient.complementary.all %}
+                          <tr>
+                            <td>{{ complementary.date }}</td>
+                            <td>{{ complementary.name }}</td>
+                            <td>{{ complementary.description }}</td>
+                            <td>{{ complementary.attached }}</td>
+                            <td>
+                              <i class="fa fa-trash fa-fw"></i>
+                              <i class="fa fa-check fa-fw"></i>
+                            </td>
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
                     </div>
                 </div>
             </div>

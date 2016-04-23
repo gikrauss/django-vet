@@ -7,6 +7,7 @@ from clinic.models import Client
 CAT = (
     ('S', 'Servicio'),
     ('P', 'Producto'),
+    ('V', 'Vacuna'),
 )
 
 class Item(models.Model):
@@ -24,8 +25,9 @@ class Item(models.Model):
 
 class Provider(models.Model):
     name = models.CharField(max_length=200, verbose_name='proveedor')
-    phone = models.CharField(max_length=20, verbose_name='telefono')
-    email = models.EmailField(max_length=200,verbose_name='email')
+    phone = models.CharField(max_length=200, verbose_name='telefono')
+    email = models.EmailField(max_length=200, verbose_name='email')
+    contact = models.CharField(null=True, blank=True, max_length=200, verbose_name='contacto')
 
     def __unicode__(self):
         return '%s' %(self.name)
@@ -36,8 +38,8 @@ class Provider(models.Model):
 
 class Sales(models.Model):
     date = models.DateField(default=date.today, verbose_name='fecha')
-    client = models.ForeignKey(Client, verbose_name='cliente')
-    item = models.ForeignKey(Item, verbose_name='producto')
+    client = models.ForeignKey(Client, related_name='sells')
+    item = models.ForeignKey(Item, related_name='item', verbose_name='producto')
     cant = models.IntegerField(max_length=3, verbose_name='cantidad')
 #    price = models.ForeignKey(Item, verbose_name='precio')
 
@@ -47,15 +49,15 @@ class Sales(models.Model):
     class Meta:
         verbose_name = 'venta'
 
-#class Buy(models.Model):
-#    date = models.DateField(default=date.today, verbose_name='fecha')
-#    provider = models.ForeignKey(Provider, verbose_name='cliente')
-#    item = models.ForeignKey(Item, verbose_name='producto')
-#    cant = models.IntegerField(max_length=3, verbose_name='cantidad')
-#    cost = models.ForeignKey(Item, verbose_name='precio')
+class Buy(models.Model):
+    date = models.DateField(default=date.today, verbose_name='fecha')
+    provider = models.ForeignKey(Provider, related_name='buys')
+#    item = models.ForeignKey(Item, related_name='name', verbose_name='producto')
+    cant = models.IntegerField(max_length=3, verbose_name='cantidad')
+#    cost = models.ForeignKey(Item, related_name='cost', verbose_name='precio')
 
-#    def __unicode__(self):
-#        return '%s %s %s' %(self.date, self.provider, self.item)
+    def __unicode__(self):
+        return '%s %s %s' %(self.date, self.provider, self.item)
 
     class Meta:
         verbose_name = 'compra'

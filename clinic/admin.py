@@ -1,5 +1,5 @@
 from django.contrib import admin
-from clinic.models import Client, Patient, MedicalRecord, Breed, Specie, Address, PhoneNumber, Vaccine, Vac_Type
+from clinic.models import Client, Patient, MedicalRecord, Breed, Specie, Address, PhoneNumber, Vaccine, Deworming, Complementary, Vac_Type
 
 
 class MedicalRecordInLine(admin.TabularInline):
@@ -10,12 +10,22 @@ class VaccineInLine(admin.TabularInline):
   model = Vaccine
   extra = 0
 
+class DewormingInLine(admin.TabularInline):
+  model = Deworming
+  extra = 0
+
+class ComplementaryInLine(admin.TabularInline):
+  model = Complementary
+  extra = 0
+
 class PatientAdmin(admin.ModelAdmin):
   list_display = ('name', 'owner', 'specie', 'breed')
   list_filter = ('specie', 'breed')
   inlines = [
   	MedicalRecordInLine,
     VaccineInLine,
+    DewormingInLine,
+    ComplementaryInLine,
   ]
 
 

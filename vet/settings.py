@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'localflavor',
     'finances',
     'bootstrapform',
+    'widget_tweaks',
 )
 
 MIDDLEWARE_CLASSES = (
