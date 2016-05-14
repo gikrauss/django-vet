@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li class="active">Productos</li>
+        </ol> 
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Productos y Servicios</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6 col-md-3">
+        <div class="input-group custom-search-form">
+            <input type="text" class="form-control" placeholder="Buscar...">
+            <span class="input-group-btn">
+                <button method="GET" class="btn btn-default" type="button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+    <div class="col-xs-3 col-xs-offset-3 col-md-2 col-md-offset-7">
+        <a href="{% url 'finances:register_item' %}" class="btn btn-success btn-sm" role="button"><i class="fa fa-plus-circle"></i> Agregar Producto</a>
+    </div>
+</div>
+<br>
+<div class="row">
+	<div class="col-lg-12">
+        {% if item_list %}
+        <div class="table-responsive">            
+            <table class="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th width="20%">Nombre</th>                        
+                        <th width="20%">Costo</th>
+                        <th width="20%">Precio</th>
+                        <th width="10%">Stock</th>
+                        <th width="20%">Categoria</th>
+                        <th width="10%">Acciones</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in item_list %}
+                    <tr>
+                        <td><strong>{{ item.name }}</strong></td>
+                        <td>{{ item.cost }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.stock }}</td>
+                        <td>{{ item.cat }}</td>
+                        <td>                            
+                            <form method="POST" action="{% url 'finances:delete_item' item.pk %}">
+                                {% csrf_token %}
+                                <a href="{% url 'finances:edit_item' item.pk %}" class="btn btn-sm btn-primary btn-circle"><i class="fa fa-pencil"></i></a> |
+                                <button type="submit" class="btn btn-sm btn-danger btn-circle"><i class="fa fa-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <p>No hay ningún Producto o Servicio cargado</p>
+                {% endfor %}
+                </tbody>
+            </table>            
+        </div>
+        {% endif %}
+	</div>
+</div>
+{% endblock content %}

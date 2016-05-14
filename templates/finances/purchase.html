@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load bootstrap %}
+<div class="col-lg-12">
+    <h1 class="page-header"><i class="fa fa-cart-arrow-down"></i> Compra</h1>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+    	<div class="panel panel-info">
+        	<div class="panel-heading">
+                Complete los datos:
+        	</div>
+        	   <div class="panel-body">
+                    <form method="POST" action=""> {% csrf_token %}
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                              {% include "forms/field.html" with field=form.date icon='calendar' show_label=False %}
+                            </div>
+                            <div class="col-xs-6 col-md-9">
+                              {% include "forms/field.html" with field=form.provider prefix='Proveedor' show_label=False %}
+                            </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Items</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="col-xs-6">
+                                      {% include "forms/field.html" with field=form.item %}
+                                    </div>
+                                    <div class="col-xs-2">
+                                      {% include "forms/field.html" with field=form.cant %}
+                                    </div>
+                                    <div class="col-xs-2 col-xs-offset-2">
+                                       <div class="form-group">
+                                            <label class="control-label">Precio</label>
+                                            <div class="col-sm-10">
+                                              <p class="form-control-static">$ 500,00</p>
+                                            </div>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                              {% include "forms/field.html" with field=form.pay_type icon='money' show_label=False %}
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success"><i class="fa fa-shopping-cart"></i> Registrar</button>
+                        <button type="reset" class="btn btn-success">Limpiar</button>
+                    </form>
+        	   </div>
+        	   <div class="panel-footer">
+                    <a href="javascript:history.back()"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Volver</button></a>
+        	   </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

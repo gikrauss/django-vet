@@ -1,15 +1,15 @@
 from django.shortcuts import render, render_to_response, redirect
 from django.http import HttpResponsePermanentRedirect
 from django.template import RequestContext, Context, Template
-from .models import Client, Address, PhoneNumber, Patient, Breed, Specie, Vac_Type, Vaccine
-from .forms import BreedForm, SpecieForm, Vac_TypeForm, ClientForm, AddressInlineFormSet, PhoneInlineFormSet, PatientForm, MedicalRecordForm, VaccineForm, DewormingForm, ComplementaryForm, AnalysisForm
+from .models import Client, Address, PhoneNumber, Patient, Vaccine
+from .forms import ClientForm, AddressInlineFormSet, PhoneInlineFormSet, PatientForm, MedicalRecordForm, VaccineForm, DewormingForm, ComplementaryForm, AnalysisForm
 from django.core.urlresolvers import reverse_lazy, reverse
 from vanilla import ListView, UpdateView, DetailView, DeleteView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def clients_list(request):
-    client_list = Client.objects.all()
-    paginator = Paginator(client_list, 15)
+    list = Client.objects.all()
+    paginator = Paginator(list, 15) # Show 15 contacts per page
     page = request.GET.get('page')
     try:
         clients = paginator.page(page)
@@ -19,7 +19,7 @@ def clients_list(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         clients = paginator.page(paginator.num_pages)
-    return render_to_response('clinic/listado.html', {'client_list': clients, 'title': 'Clientes'})
+    return render_to_response('clinic/client_list.html', {'list': clients, 'paginator': paginator})
 
 def add_client(request):
     if request.method == 'POST':
@@ -57,8 +57,8 @@ class DeleteClient(DeleteView):
     success_url = reverse_lazy('clinic:clients_list')
 
 def patients_list(request):
-    patient_list = Patient.objects.all()
-    paginator = Paginator(patient_list, 15)
+    list = Patient.objects.all()
+    paginator = Paginator(list, 15)
     page = request.GET.get('page')
     try:
         patients = paginator.page(page)
@@ -68,7 +68,7 @@ def patients_list(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         patients = paginator.page(paginator.num_pages)
-    return render_to_response('clinic/listado.html', {'patient_list': patients, 'title': 'Pacientes'})
+    return render_to_response('clinic/patient_list.html', {'list': patients, 'paginator': paginator})
 
 def add_patient(request, pk):
     if request.method == 'POST':
@@ -137,94 +137,3 @@ def add_complementary(request, pk):
         form = ComplementaryForm()
     return render_to_response('clinic/medicalrecord/register_complementary.html', {'form_complementary': form}, context_instance=RequestContext(request))
 
-class BreedList(ListView):
-    model = Breed
-    template_name = 'clinic/conf/conf_list.html'
-
-def add_breed(request):
-    if request.method == "POST":
-        form = BreedForm(request.POST)
-        if(form.is_valid()):
-            message = 'Registro de Raza Exitoso'
-            form.save()
-        else:
-            message = 'Error en Registro'
-        return render_to_response('clinic/conf/register.html',
-              {'message': message},
-              context_instance=RequestContext(request))
-    else:
-        form = BreedForm()
-    return render_to_response('clinic/conf/register.html', {'form': form, 'title': 'Registro nueva Raza'},
-                context_instance=RequestContext(request))
-
-class EditBreed(UpdateView):
-    model = Breed
-    fields = ['name','specie']
-    template_name = "clinic/conf/conf_edit.html"
-    success_url = reverse_lazy('clinic:breed_conf')
-
-class DeleteBreed(DeleteView):
-    model = Breed
-    success_url = reverse_lazy('clinic:breed_conf')
-
-class SpecieList(ListView):
-    model = Specie
-    template_name = 'clinic/conf/conf_list.html'
-
-def add_specie(request):
-    if request.method == "POST":
-        form = SpecieForm(request.POST)
-        if(form.is_valid()):
-            message = 'Registro de Especie Exitoso'
-            form.save()
-        else:
-            message = 'Error en el Registro'
-        return render_to_response('clinic/conf/register.html',
-              {'message': message},
-              context_instance=RequestContext(request))
-    else:
-        form = SpecieForm()
-    return render_to_response('clinic/conf/register.html', {'form': form, 'title': 'Registro nueva Especie'},
-                context_instance=RequestContext(request))
-
-class EditSpecie(UpdateView):
-    model = Specie
-    fields = ['name']
-    template_name = "clinic/conf/conf_edit.html"
-    success_url = reverse_lazy('clinic:specie_conf')
-
-class DeleteSpecie(DeleteView):
-    model = Specie
-    success_url = reverse_lazy('clinic:specie_conf')
-
-class Vac_TypeList(ListView):
-    model = Vac_Type
-    template_name = 'clinic/conf/conf_list.html'
-
-def add_vac_type(request):
-    if request.method == "POST":
-
-        form = Vac_TypeForm(request.POST)
-
-        if(form.is_valid()):
-            message = 'Registro de Vacuna Exitoso'
-            form.save()
-        else:
-            message = 'Error'
-
-        return render_to_response('clinic/conf/register.html',
-              {'message': message},
-              context_instance=RequestContext(request))
-    else:
-        return render_to_response('clinic/conf/register.html', {'form': Vac_TypeForm(), 'title': 'Registro nueva vacuna'},
-                context_instance=RequestContext(request))
-
-class EditVac_Type(UpdateView):
-    model = Vac_Type
-    fields = ['name', 'description']
-    template_name = "clinic/conf/conf_edit.html"
-    success_url = reverse_lazy('clinic:vac_conf')
-
-class DeleteVac_Type(DeleteView):
-    model = Vac_Type
-    success_url = reverse_lazy('clinic:vac_conf')

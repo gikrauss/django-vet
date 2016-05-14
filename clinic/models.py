@@ -4,6 +4,7 @@ from django.db import models
 from datetime import date
 from smart_selects.db_fields import ChainedForeignKey
 from localflavor.ar import ar_provinces
+from settings.models import Specie, Breed, Vac_Type
 
 
 PHONE_TYPE = (
@@ -49,30 +50,6 @@ class PhoneNumber(models.Model):
   class Meta:
     verbose_name = 'número de teléfono'
     verbose_name_plural = 'números de teléfono'
-
-
-class Specie(models.Model):
-  name = models.CharField(max_length=200, verbose_name='nombre')
-
-  def __unicode__(self):
-    return self.name
-
-  class Meta:
-    verbose_name = 'especie'
-    ordering = ['name']
-
-
-class Breed(models.Model):
-  name = models.CharField(max_length=200, verbose_name='nombre')
-  specie = models.ForeignKey(Specie)
-
-  def __unicode__(self):
-    return self.name
-
-  class Meta:
-    verbose_name = 'raza'
-    ordering = ['name']
-
 
 GENDER_TYPE= (
   ('Macho', 'Macho'),
@@ -124,22 +101,9 @@ class MedicalRecord(models.Model):
   class Meta:
     verbose_name = 'historia clínica'
 
-
-class Vac_Type(models.Model):
-  name = models.CharField(max_length=200, verbose_name='tipo de vacuna')
-  description = models.CharField(max_length=200, null=True, blank=True, verbose_name='descripción')
-
-  def __unicode__(self):
-    return self.name
-
-  class Meta:
-    verbose_name = 'tipo de vacuna'
-    verbose_name_plural = 'tipos de vacunas'
-    ordering = ['name']
-
 class Vaccine(models.Model):
   patient = models.ForeignKey(Patient, related_name='vaccine')
-  vac_type = models.ForeignKey(Vac_Type, related_name='tipo vacuna', verbose_name='tipo de vacuna')
+  vac_type = models.ForeignKey(Vac_Type, related_name='vac_type', verbose_name='tipo de vacuna')
   date = models.DateField(default=date.today, verbose_name='fecha de vacunación')
   marca = models.CharField(max_length=20, verbose_name='marca')
   expire_date = models.DateField(verbose_name='fecha de vencimiento')

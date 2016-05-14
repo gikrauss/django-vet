@@ -16,14 +16,14 @@
                     <form method="POST" action=""> {% csrf_token %}
                         <div class="row">
                             <div class="col-xs-12">
-					                         {{ form|bootstrap }}
+					           {{ form|bootstrap }}
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <i class="fa fa-map"></i><strong> Domicilios</strong>
+                                        <i class="fa fa-map-marker"></i><strong> Domicilios</strong>
                                     </div>
                                     <div class="panel-body">
                                         {{ formset_address|bootstrap }}

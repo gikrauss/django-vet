@@ -6,7 +6,7 @@
         <ol class="breadcrumb">
           <li><a href="{% url 'home' %}">Home</a></li>
           <li><a href="{% url 'clinic:clients_list' %}">Clientes</a></li>
-          <li class="active">{{ client.lastname }} {{ client.firstname }}</li>
+          <li class="active"><i class="fa fa-user"></i> {{ client.lastname }} {{ client.firstname }}</li>
         </ol> 
     </div>
 </div>
@@ -17,34 +17,37 @@
     <!-- /.col-lg-12 -->
 </div>
 <div class="row">
-	<div class="col-lg-6">
+	<div class="col-lg-7">
 	    <div class="panel panel-success">
 	        <div class="panel-heading">
 	            <strong>Cliente: </strong> {{ client.lastname }} {{ client.firstname }}
 	        </div>
 	        <div class="panel-body">
 	        	{% for address in client.addresses.all %}
-                	<strong>Domicilio: </strong>{{ address.address }}, {{ address.city }}<br>
+                	<strong>Domicilio: </strong>{{ address.address }}, {{ address.city }} ({{ address.postal }})<br>
                 {% endfor %}
                 {% for phonenumber in client.phone_numbers.all %}
                 	<strong>Teléfono: </strong>{{ phonenumber.number }} ({{ phonenumber.number_type }})<br>
                 {% endfor %}
 	            <p><strong>email: </strong>{{ client.email }}</p>
+	            <div class="pull-right">
+	            	<a href="{% url 'clinic:edit_client' client.pk %}" class="btn btn-success btn-xs" role="button"><i class="fa fa-plus-circle"></i> Modificar</a>
+	            </div>
 	        </div>
 	    </div>
 	</div>
-	<div class="col-lg-6">
+	<div class="col-lg-5">
 	    <div class="panel panel-success">
 	        <div class="panel-heading">
-	            <strong>Mascotas:</strong>
+	            <strong> Mascotas:</strong>
 	        </div>
 	        <div class="panel-body">
 	            <table class="table table-hover">
 	            	<thead>
 	            		<tr>
-	            			<th>Nombre</th>
-	            			<th>Especie</th>
-	            			<th>Raza</th>
+	            			<th width="50%">Nombre</th>
+	            			<th width="25%">Especie</th>
+	            			<th width="25%">Raza</th>
 	            		</tr>
 	            	</thead>
 	            	<tbody>
@@ -86,9 +89,9 @@
                 {% for sales in client.sells.all %}
                 <tr>
                   <td>{{ sales.date }}</td>
-                  <td>{{ patient.item }}</td>
-                  <td>{{ patient.cant }}</td>
-                  <td></td>
+                  <td>{{ sales.item }}</td>
+                  <td>{{ sales.cant }}</td>
+                  <td>$ {{ sales.item.price }}</td>
                 </tr>
                 {% endfor %}
               </tbody>

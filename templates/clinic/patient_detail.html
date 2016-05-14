@@ -5,8 +5,8 @@
     <div class="col-lg-12">
         <ol class="breadcrumb">
           <li><a href="{% url 'home' %}">Home</a></li>
-          <li><a href="{% url 'clinic:patients_list' %}">Pacientes</a></li>
-          <li class="active">{{ patient.name}}</li>
+          <li><a href="{% url 'clinic:patients_list' %}"> Pacientes</a></li>
+          <li class="active"><i class="fa fa-paw"></i> {{ patient.name}}</li>
         </ol> 
     </div>
 </div>
@@ -71,7 +71,7 @@
                         <i class="fa fa-user fa-4x"></i>
                     </div>
                     <div class="col-xs-10 text-left">
-                        <div><h4>{{ patient.owner.lastname }} {{ patient.owner.firstname }}<br>
+                        <div><h4><a href="{% url 'clinic:client_details' patient.owner.pk %}">{{ patient.owner.lastname }} {{ patient.owner.firstname }}</a><br>
                         <small>Propietario</small></h4></div>
                     </div>
                 </div>

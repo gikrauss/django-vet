@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <ol class="breadcrumb">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li class="active">Pacientes</li>
+        </ol> 
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <h1 class="page-header">Pacientes</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6 col-md-3">
+        <div class="input-group custom-search-form">
+            <input type="text" class="form-control" placeholder="Buscar...">
+            <span class="input-group-btn">
+                <button method="GET" class="btn btn-default" type="button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="table-responsive">
+      {% if list %}
+        <table class="table table-hover table-condensed">
+            <thead>
+                <tr>
+                  <th width="25%">Nombre</th>
+                  <th width="25%">Propietario</th>
+                  <th width="15%">Especie</th>
+                  <th width="15%">Raza</th>
+                  <th width="10%">Sexo</th>
+                  <th width="10%">Acciones</th>
+              </tr>
+          </thead>
+          <tbody>
+          {% for patient in list %}                    
+            <tr>
+              <td><a href="{% url 'clinic:patient_details' patient.pk %}">{{ patient.name }}</a></td>
+              <td><a href="{% url 'clinic:client_details' patient.owner.pk %}">{{ patient.owner }}</a></td>
+              <td><a href="{% url 'clinic:patient_details' patient.pk %}">{{ patient.specie }}</a></td>
+              <td><a href="{% url 'clinic:patient_details' patient.pk %}">{{ patient.breed }}</a></td>
+              <td>
+                  {% if patient.gender == 'Hembra' %}
+                      <i class="fa fa-venus"></i>
+                  {% else %}
+                      <i class="fa fa-mars"></i>
+                  {% endif %}
+                  {{ patient.gender }}
+              </td>
+              <td>
+                  <form method="POST" action="{% url 'clinic:delete_patient' patient.pk %}">
+                      {% csrf_token %}
+                      <a href="{% url 'clinic:edit_patient' patient.pk %}" class="btn btn-sm btn-primary btn-circle"><i class="fa fa-pencil"></i></a> |
+                      <button type="submit" class="btn btn-sm btn-danger btn-circle"><i class="fa fa-trash"></i></button>                     
+                  </form>
+              </td>
+            </tr>
+          </tbody>
+          {% empty %}
+            <p>Aún no hay Pacientes ingresados</p>
+          {% endfor %}          
+      </table>
+      {% endif %}
+      </table>
+    </div>
+  </div>
+</div>
+
+{% include "pagination/pagination.html" %}
+
+{% endblock content %}

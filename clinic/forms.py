@@ -1,31 +1,20 @@
 from django import forms
 from django.forms.models import inlineformset_factory, modelformset_factory
-from .models import Breed, Specie, Vac_Type, Client, Address, PhoneNumber, Patient, MedicalRecord, Vaccine, Complementary, Deworming, Analysis
+from .models import Client, Address, PhoneNumber, Patient, MedicalRecord, Vaccine, Complementary, Deworming, Analysis
 from localflavor.ar import ar_provinces
-
-class BreedForm(forms.ModelForm):
-  class Meta:
-    model = Breed
-    fields = ('name', 'specie')
-
-class SpecieForm(forms.ModelForm):
-    class Meta:
-     model = Specie
-
-class Vac_TypeForm(forms.ModelForm):
-  class Meta:
-    model = Vac_Type
 
 class ClientForm(forms.ModelForm):
   class Meta:
     model = Client
+    exclude = []
 
-AddressInlineFormSet = inlineformset_factory(Client, Address, extra=1)
-PhoneInlineFormSet = inlineformset_factory(Client, PhoneNumber, extra=1)
+AddressInlineFormSet = inlineformset_factory(Client, Address, extra=1, exclude=(),)
+PhoneInlineFormSet = inlineformset_factory(Client, PhoneNumber, extra=1, exclude=(),)
 
 class PatientForm(forms.ModelForm):
   class Meta:
     model = Patient
+    exclude = []
     widgets = {
     'initial_anamnesis': forms.Textarea(attrs={'rows':3}),
     }
@@ -90,3 +79,4 @@ class DewormingForm(forms.ModelForm):
 class AnalysisForm(forms.ModelForm):
   class Meta:
     model = Analysis
+    exclude = []

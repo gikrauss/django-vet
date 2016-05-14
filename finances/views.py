@@ -3,11 +3,11 @@ from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext, Context, Template
 from vanilla import ListView, UpdateView, DetailView, DeleteView
 from .models import Item, Provider, Sales
-from .forms import SalesForm, ItemForm, ProviderForm
+from .forms import SalesForm, ItemForm, ProviderForm, PurchaseForm
 
 class ProviderList(ListView):
     model = Provider
-    template_name = "finances/listado.html"
+    template_name = "finances/provider_list.html"
 
 def add_provider(request):
     title = "Proveedor"
@@ -26,23 +26,16 @@ class EditProvider(UpdateView):
     template_name = "finances/provider_edit.html"
     success_url = reverse_lazy('finances:provider_list')
 
+class ProviderDetails(DetailView):
+    model = Provider
+
 class DeleteProvider(DeleteView):
     model = Provider
     success_url = reverse_lazy('finances:provider_list')
 
-def add_sale(request):
-    if request.method == 'POST':
-        form = SalesForm(request.POST)
-        if form.is_valid():
-            sales = form.save()
-            return redirect('/')
-    else:
-        form = SalesForm()
-    return render_to_response('finances/sales.html', {'form': form}, context_instance=RequestContext(request))
-
 class ItemList(ListView):
     model = Item
-    template_name = "finances/listado.html"
+    template_name = "finances/item_list.html"
 
 def add_item(request):
     title = "Producto"
@@ -64,3 +57,23 @@ class EditItem(UpdateView):
 class DeleteItem(DeleteView):
     model = Item
     success_url = reverse_lazy('finances:item_list')
+
+def add_sale(request):
+    if request.method == 'POST':
+        form = SalesForm(request.POST)
+        if form.is_valid():
+            sales = form.save()
+            return redirect('home')
+    else:
+        form = SalesForm()
+    return render_to_response('finances/sales.html', {'form': form}, context_instance=RequestContext(request))
+
+def add_purchase(request):
+    if request.method == 'POST':
+        form = PurchaseForm(request.POST)
+        if form.is_valid():
+            purchase = form.save()
+            return redirect('home')
+    else:
+        form = PurchaseForm()
+    return render_to_response('finances/purchase.html', {'form': form}, context_instance=RequestContext(request))

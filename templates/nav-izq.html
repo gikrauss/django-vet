@@ -31,10 +31,10 @@
                 <a href="#"><i class="fa fa-briefcase fa-fw"></i> Finanzas<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="sales.html"><i class="fa fa-shopping-cart fa-fw"></i> Ventas</a>
+                        <a href="{% url 'finances:add_sale' %}"><i class="fa fa-shopping-cart fa-fw"></i> Ventas</a>
                     </li>
                     <li>
-                        <a href="purchase.html"><i class="fa fa-cart-arrow-down fa-fw"></i> Compras</a>
+                        <a href="{% url 'finances:add_purchase' %}"><i class="fa fa-cart-arrow-down fa-fw"></i> Compras</a>
                     </li>
                     <li>
                         <a href="{% url 'finances:item_list' %}"><i class="fa fa-database fa-fw"></i> Productos</a>
@@ -48,13 +48,13 @@
                 <a href="#"><i class="fa fa-cogs fa-fw"></i> Configuración<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="{% url 'clinic:vac_conf' %}"><i class="fa fa-bars fa-fw"></i> Vacunas</a>
+                        <a href="{% url 'settings:vac_conf' %}"><i class="fa fa-bars fa-fw"></i> Vacunas</a>
                     </li>
                     <li>
-                        <a href="{% url 'clinic:specie_conf' %}"><i class="fa fa-bars fa-fw"></i> Especies</a>
+                        <a href="{% url 'settings:specie_conf' %}"><i class="fa fa-bars fa-fw"></i> Especies</a>
                     </li>
                     <li>
-                        <a href="{% url 'clinic:breed_conf' %}"><i class="fa fa-bars fa-fw"></i> Razas</a>
+                        <a href="{% url 'settings:breed_conf' %}"><i class="fa fa-bars fa-fw"></i> Razas</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->

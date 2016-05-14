@@ -1,83 +1,50 @@
+<div class="row">
+  <div class="col-xs-6 col-md-6">
+    <h4><small>Total de registros: {{ paginator.count }}</small></h4>
+  </div>
+  <div class="col-xs-6 col-md-6" align="right">
+    <nav>
+      <ul class="pagination pagination-sm">
 
-  <nav>
-    <ul class="pagination pagination-sm">
-
-      <!-- Paginator Clientes -->
-      {% if client_list %}
-        {% if client_list.has_previous %}
-          <li>
-            <a href="?page={{ client_list.previous_page_number }}" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li>
-            <a href="?page={{ client_list.previous_page_number }}">{{ client_list.previous_page_number }}</a>
-          </li>
-        {% else %}
-          <li class="disabled">
-            <a href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
+        <!-- Paginator Clientes -->
+        {% if list %}
+          {% if list.has_previous %}
+            <li>
+              <a href="?page={{ list.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li>
+              <a href="?page={{ list.previous_page_number }}">{{ list.previous_page_number }}</a>
+            </li>
+          {% else %}
+            <li class="disabled">
+              <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+          {% endif %}
+            <li class="active">
+              <a href="#">{{ list.number }}</a>
+            </li>
+          {% if list.has_next %}
+            <li>
+              <a href="?page={{ list.next_page_number }}">{{ list.next_page_number }}</a>
+            </li>
+            <li>
+              <a href="?page={{ list.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          {% else %}
+            <li class="disabled">
+              <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          {% endif %}
         {% endif %}
-          <li class="active">
-            <a href="#">{{ client_list.number }}</a>
-          </li>
-        {% if client_list.has_next %}
-          <li>
-            <a href="?page={{ client_list.next_page_number }}">{{ client_list.next_page_number }}</a>
-          </li>
-          <li>
-            <a href="?page={{ client_list.next_page_number }}" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        {% else %}
-          <li class="disabled">
-            <a href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        {% endif %}
-      {% endif %}
-
-      <!-- Paginator Pacientes -->
-      {% if patient_list %}
-        {% if patient_list.has_previous %}
-          <li>
-            <a href="?page={{ patient_list.previous_page_number }}" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li>
-            <a href="?page={{ patient_list.previous_page_number }}">{{ patient_list.previous_page_number }}</a>
-          </li>
-        {% else %}
-          <li class="disabled">
-            <a href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-        {% endif %}
-          <li class="active">
-            <a href="#">{{ patient_list.number }}</a>
-          </li>
-        {% if patient_list.has_next %}
-          <li>
-            <a href="?page={{ patient_list.next_page_number }}">{{ patient_list.next_page_number }}</a>
-          </li>
-          <li>
-            <a href="?page={{ patient_list.next_page_number }}" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        {% else %}
-          <li class="disabled">
-            <a href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        {% endif %}
-      {% endif %}
-    </ul>
-  </nav>
+      </ul>
+    </nav>
+  </div>
+</div>

@@ -3,7 +3,7 @@
 {% block content %}
 {% load bootstrap %}
 <div class="col-lg-12">
-    <h1 class="page-header">Venta</h1>
+    <h1 class="page-header"><i class="fa fa-shopping-cart"></i> Venta</h1>
 </div>
 <div class="row">
     <div class="col-xs-12">
@@ -25,18 +25,31 @@
                           <div class="col-xs-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4>Items</h4>
+                                    <h3 class="panel-title">Items</h3>
                                 </div>
                                 <div class="panel-body">
-                                <div class="col-xs-6">
-                                  {% include "forms/field.html" with field=form.item %}
-                                </div>
-                                <div class="col-xs-2">
-                                  {% include "forms/field.html" with field=form.cant %}
-                                </div>
+                                    <div class="col-xs-6">
+                                      {% include "forms/field.html" with field=form.item %}
+                                    </div>
+                                    <div class="col-xs-2">
+                                      {% include "forms/field.html" with field=form.cant %}
+                                    </div>
+                                    <div class="col-xs-2 col-xs-offset-2">
+                                       <div class="form-group">
+                                            <label class="control-label">Precio</label>
+                                            <div class="col-sm-10">
+                                              <p class="form-control-static">$ 500,00</p>
+                                            </div>
+                                       </div>
+                                    </div>
                                 </div>
                             </div>
                           </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                              {% include "forms/field.html" with field=form.pay_type icon='money' show_label=False %}
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-success"><i class="fa fa-shopping-cart"></i> Vender</button>
                         <button type="reset" class="btn btn-success">Limpiar</button>

@@ -5,6 +5,7 @@ from .models import Item, Provider, Sales, Buy
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
+        exclude = []
 
 class SalesForm(forms.ModelForm):
     class Meta:
@@ -14,3 +15,9 @@ class SalesForm(forms.ModelForm):
 class ProviderForm(forms.ModelForm):
     class Meta:
         model = Provider
+        exclude = []
+
+class PurchaseForm(forms.ModelForm):
+    class Meta:
+        model = Buy
+        exclude = []

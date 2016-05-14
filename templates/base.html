@@ -27,6 +27,9 @@
     <!-- Custom Fonts -->
     <link href="{% static "font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
 
+    {% block extra_css %}{% endblock %}
+
+    {% block extra_js %}{% endblock %}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -68,6 +71,8 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="{% static "js/sb-admin-2.js" %}" type="text/javascript"></script>
+
+{% block extra_jQuery %}{% endblock %}
 
 </body>
 
